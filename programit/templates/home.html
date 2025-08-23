@@ -1,0 +1,74 @@
+<!-- home.html w Django template (czysty HTML + CSS + JS) -->
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stoper</title>
+  <script>
+    let time = 0;
+    let running = false;
+    let interval;
+
+    function formatTime(seconds) {
+      const mins = String(Math.floor(seconds / 60)).padStart(2, "0");
+      const secs = String(seconds % 60).padStart(2, "0");
+      return `${mins}:${secs}`;
+    }
+
+    function updateDisplay() {
+      document.getElementById("display").innerText = formatTime(time);
+    }
+
+    function startTimer() {
+      if (!running) {
+        running = true;
+        interval = setInterval(() => {
+          time++;
+          updateDisplay();
+        }, 1000);
+      }
+    }
+
+    function stopTimer() {
+      running = false;
+      clearInterval(interval);
+    }
+
+    function resetTimer() {
+      running = false;
+      clearInterval(interval);
+      time = 0;
+      updateDisplay();
+    }
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gray-100">
+  <!-- Pasek menu -->
+  <nav class="flex justify-between items-center bg-white shadow px-6 py-4">
+    <div class="flex space-x-6 font-semibold text-gray-700">
+      <a href="" class="hover:text-blue-600">Home</a>
+      <a href="/stats" class="hover:text-blue-600">Stats</a>
+      <a href="/login" class="hover:text-blue-600">Login</a>
+    </div>
+    <div class="flex items-center space-x-3">
+      <a href="profile/"><div class="w-10 h-10 rounded-full bg-gray-300"></div></a>
+      
+    </div>
+  </nav>
+
+  <!-- Stoper -->
+  <main class="flex flex-col items-center justify-center mt-20">
+    <div class="bg-white rounded-2xl shadow p-6 w-80 text-center">
+      <h1 class="text-xl font-bold mb-4">Stoper</h1>
+      <div id="display" class="text-4xl font-mono mb-6">00:00</div>
+      <div class="flex justify-center space-x-4">
+        <button onclick="startTimer()" class="px-4 py-2 rounded-2xl bg-green-500 text-white hover:bg-green-600">Start</button>
+        <button onclick="stopTimer()" class="px-4 py-2 rounded-2xl bg-red-500 text-white hover:bg-red-600">Stop</button>
+        <button onclick="resetTimer()" class="px-4 py-2 rounded-2xl bg-gray-500 text-white hover:bg-gray-600">Reset</button>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

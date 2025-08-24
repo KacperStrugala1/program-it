@@ -69,6 +69,17 @@
         <button onclick="resetTimer()" class="px-4 py-2 rounded-2xl bg-gray-500 text-white hover:bg-gray-600">Reset</button>
       </div>
     </div>
+    <br>
+    <div class="bg-white rounded-2xl shadow p-6 w-80 text-center">
+      <h1 class="text-xl font-bold mb-4">Your recent times</h1>
+      <ul>
+        {%for time in times%}
+        <li>
+          {{time.start_time}} - {{time.stop_time}}
+        </li>
+        {%endfor%}
+      </ul>
+    </div>
   </main>
 </body>
 </html>

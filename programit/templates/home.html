@@ -35,12 +35,6 @@
       clearInterval(interval);
     }
 
-    function resetTimer() {
-      running = false;
-      clearInterval(interval);
-      time = 0;
-      updateDisplay();
-    }
   </script>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -57,27 +51,32 @@
       
     </div>
   </nav>
-
   <!-- Stoper -->
   <main class="flex flex-col items-center justify-center mt-20">
     <div class="bg-white rounded-2xl shadow p-6 w-80 text-center">
       <h1 class="text-xl font-bold mb-4">Stoper</h1>
       <div id="display" class="text-4xl font-mono mb-6">00:00</div>
       <div class="flex justify-center space-x-4">
-        <button onclick="startTimer()" class="px-4 py-2 rounded-2xl bg-green-500 text-white hover:bg-green-600">Start</button>
-        <button onclick="stopTimer()" class="px-4 py-2 rounded-2xl bg-red-500 text-white hover:bg-red-600">Stop</button>
-        <button onclick="resetTimer()" class="px-4 py-2 rounded-2xl bg-gray-500 text-white hover:bg-gray-600">Reset</button>
+       <form method="POST">
+        {% csrf_token %}
+          <button onclick="startTimer()" name="action" value="start" type="submit" class="px-4 py-2 rounded-2xl bg-green-500 text-white hover:bg-green-600">
+            Start
+          </button>
+          <button onclick="stopTimer()" name="action" value="stop" class="px-4 py-2 rounded-2xl bg-red-500 text-white hover:bg-red-600">
+            Stop
+          </button>
+        </form>
       </div>
     </div>
     <br>
     <div class="bg-white rounded-2xl shadow p-6 w-80 text-center">
       <h1 class="text-xl font-bold mb-4">Your recent times</h1>
       <ul>
-        {%for time in times%}
-        <li>
-          {{time.start_time}} - {{time.stop_time}}
-        </li>
-        {%endfor%}
+        {% for time in times %}
+          <li>{{ time.get_duration }} | {{time.category}}</li>
+        {% empty %}
+          <li>No times recorded yet.</li>
+        {% endfor %}
       </ul>
     </div>
   </main>

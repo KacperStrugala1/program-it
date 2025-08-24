@@ -16,30 +16,29 @@
     {% csrf_token %}
 
 
-    <div>
-        <label for="username" class="block text-gray-700 font-medium mb-1">Name account</label>
-        <input type="text" id="username" name="username" required
-        class="w-full border rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-    </div>
+        <div>
+            <label for="username" class="block text-gray-700 font-medium mb-1">Name account</label>
+            <input type="text" id="username" name="username" required
+            class="w-full border rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
 
 
-    <div>
-        <label for="password" class="block text-gray-700 font-medium mb-1">Password</label>
-        <input type="password" id="password" name="password" required
-        class="w-full border rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-    </div>
+        <div>
+            <label for="password" class="block text-gray-700 font-medium mb-1">Password</label>
+            <input type="password" id="password" name="password1" required
+            class="w-full border rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>from django.contrib.auth.forms import *
+        <div>
+            <label for="password" class="block text-gray-700 font-medium mb-1">Retype Password</label>
+            <input type="password" id="password" name="password2" required
+            class="w-full border rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
 
-     <div>
-        <label for="password" class="block text-gray-700 font-medium mb-1">Retype Password</label>
-        <input type="password" id="password" name="password" required
-        class="w-full border rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-    </div>
 
-
-    <button type="submit"
-        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-xl transition">
-        Register
-    </button>
+        <button type="submit"
+            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-xl transition">
+            Register
+        </button>
     </form>
 
     </p>

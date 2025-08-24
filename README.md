@@ -1,4 +1,4 @@
-App is still in early builging phase, if you want to add some code:
+App is still in early building phase, if you want to add some code:
 
 1. Clone repo
 ```bash

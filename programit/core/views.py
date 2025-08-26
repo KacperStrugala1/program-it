@@ -4,6 +4,9 @@ from main.models import Time
 from django.contrib.auth.forms import *
 from django.utils import timezone
 import logging
+from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
 
 def home_view(request):
     times = Time.objects.all()
@@ -25,15 +28,29 @@ def home_view(request):
     return render(request,"home.html", context)
     
 def stats_view(request):
-    return HttpResponse("There are profile stats")
+    times = Time.objects.all()
+    context = {'times': times,}
+    return render(request,"stats.html", context)
 
-def login(request):
-    #do login
-    return render(request, "login.html")
+def login_view(request):
+    if request.method == "POST":
+        username = request.POST["username"]
+        password = request.POST["password"]
+
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.info(request,"invalid credentials")
+            return redirect('login')
+    else:
+        return render(request, "login.html")
 
 def register(request):
     #continue register part 
     return render(request, "register.html")
 
 def profile_view(request):
+
     return render(request, "profile.html")

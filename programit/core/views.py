@@ -7,6 +7,8 @@ import logging
 from django.contrib.auth import authenticate
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
+from django.contrib.auth.forms import UserCreationForm
+from .forms import RegisterForm
 
 def home_view(request):
     times = Time.objects.all()
@@ -48,8 +50,14 @@ def login_view(request):
         return render(request, "login.html")
 
 def register(request):
-    #continue register part 
-    return render(request, "register.html")
+    if request.method == "POST":
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("/login")
+    else:
+        form = RegisterForm()
+    return render(request, "register.html", {"form": form})
 
 def profile_view(request):
 

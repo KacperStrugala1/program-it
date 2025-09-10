@@ -5,37 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stoper</title>
-  <script>
-    let time = 0;
-    let running = false;
-    let interval;
-
-    function formatTime(seconds) {
-      const mins = String(Math.floor(seconds / 60)).padStart(2, "0");
-      const secs = String(seconds % 60).padStart(2, "0");
-      return `${mins}:${secs}`;
-    }
-
-    function updateDisplay() {
-      document.getElementById("display").innerText = formatTime(time);
-    }
-
-    function startTimer() {
-      if (!running) {
-        running = true;
-        interval = setInterval(() => {
-          time++;
-          updateDisplay();
-        }, 1000);
-      }
-    }
-
-    function stopTimer() {
-      running = false;
-      clearInterval(interval);
-    }
-
-  </script>
+  
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="min-h-screen bg-gray-100">
@@ -59,10 +29,10 @@
       <div class="flex justify-center space-x-4">
        <form method="POST">
         {% csrf_token %}
-          <button onclick="startTimer()" name="action" value="start" type="submit" class="px-4 py-2 rounded-2xl bg-green-500 text-white hover:bg-green-600">
+          <button name="action" value="start" type="submit" class="px-4 py-2 rounded-2xl bg-green-500 text-white hover:bg-green-600">
             Start
           </button>
-          <button onclick="stopTimer()" name="action" value="stop" class="px-4 py-2 rounded-2xl bg-red-500 text-white hover:bg-red-600">
+          <button name="action" value="stop" class="px-4 py-2 rounded-2xl bg-red-500 text-white hover:bg-red-600">
             Stop
           </button>
         </form>

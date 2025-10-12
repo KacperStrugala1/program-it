@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-from programit.main.time_model import Time
+from main.models.time_model import Time
+from main.models.work_time import WorkTime
 from django.contrib.auth.forms import *
 from django.utils import timezone
 import logging
@@ -60,3 +61,10 @@ def register(request):
 def profile_view(request):
 
     return render(request, "profile.html")
+
+def work_view(request):
+
+    work_times = WorkTime.objects.all()
+    context = {'work_times': work_times}
+
+    return render(request, "work.html", context)

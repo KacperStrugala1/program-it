@@ -13,7 +13,7 @@
   <!-- Pasek menu -->
   <nav class="flex justify-between items-center bg-white shadow px-6 py-4">
     <div class="flex space-x-6 font-semibold text-gray-700">
-      <a href="" class="hover:text-blue-600">Home</a>
+      <a href="/" class="hover:text-blue-600">Home</a>
       <a href="/stats" class="hover:text-blue-600">Stats</a>
       <a href="/work" class="hover:text-blue-600">Work</a>
       <a href="/login" class="hover:text-blue-600">Login</a>
@@ -25,26 +25,15 @@
   </nav>
   <!-- Stoper -->
   <main class="flex flex-col items-center justify-center mt-20">
-    <div class="bg-white rounded-2xl shadow p-6 w-80 text-center">
-      <h1 class="text-xl font-bold mb-4">Stoper</h1>
-      <div id="display" class="text-4xl font-mono mb-6">00:00</div>
-      <div class="flex justify-center space-x-4">
-       <form method="POST">
-        {% csrf_token %}
-          <button name="action" value="start" type="submit" class="px-4 py-2 rounded-2xl bg-green-500 text-white hover:bg-green-600">
-            Start
-          </button>
-          <button name="action" value="stop" class="px-4 py-2 rounded-2xl bg-red-500 text-white hover:bg-red-600">
-            Stop
-          </button>
-        </form>
-      </div>
-    </div>
     <br>
     <div class="bg-white rounded-2xl shadow p-6 w-80 text-center">
-      <h1 class="text-xl font-bold mb-4">Your recent times</h1>
+      <h1 class="text-xl font-bold mb-4">Your recent work time</h1>
       <ul>
-      
+        {% for work_time in work_times %}
+          <li>{{ work_time.duration }}, {{work_time.category}}, {{work_time.date}}</li>
+        {% empty %}
+          <li>No times recorded yet.</li>
+        {% endfor %}
       </ul>
     </div>
   </main>

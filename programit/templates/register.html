@@ -1,40 +1,73 @@
-<!-- login.html w Django template (czysty HTML + CSS + JS) -->
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+<html lang="pl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Rejestracja</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    </head>
-    <body class="min-h-screen bg-gray-100 flex items-center justify-center">
-    <div class="bg-white shadow rounded-2xl p-8 w-96">
-    <h1 class="text-2xl font-bold text-center mb-6">Register</h1>
-    <form method="POST" action="{% url 'register' %}" class="space-y-4">
-    {% csrf_token %}
-        <div>
-            {% csrf_token %}
-            <label for="username" class="block text-gray-700 font-medium mb-1">Name account</label>
-            <form method="post">
-        {% csrf_token %}
-        <label for="id_username">Username:</label>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100 flex items-center justify-center">
+
+  <div class="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-md">
+    <h1 class="text-3xl font-bold text-center text-gray-800 mb-2">Rejestracja</h1>
+    <p class="text-center text-gray-500 mb-6">Utwórz nowe konto, aby rozpocząć!</p>
+
+    {% if form.non_field_errors %}
+      <div class="mb-4 text-red-600 text-sm">
+        {% for err in form.non_field_errors %}
+          <div>{{ err }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <form method="post" action="{% url 'register' %}" class="space-y-5">
+      {% csrf_token %}
+
+      <!-- Nazwa użytkownika -->
+      <div>
+        <label for="{{ form.username.id_for_label }}" class="block text-gray-700 font-medium mb-1">Nazwa użytkownika</label>
         {{ form.username }}
-        <br />
+        {% if form.username.errors %}
+          <p class="text-red-500 text-sm mt-1">{{ form.username.errors.0 }}</p>
+        {% endif %}
+      </div>
 
-        <label for="id_email">Email:</label>
+      <!-- Email -->
+      <div>
+        <label for="{{ form.email.id_for_label }}" class="block text-gray-700 font-medium mb-1">Email</label>
         {{ form.email }}
-        <br />
+        {% if form.email.errors %}
+          <p class="text-red-500 text-sm mt-1">{{ form.email.errors.0 }}</p>
+        {% endif %}
+      </div>
 
-        <label for="id_password1">Password:</label>
+      <!-- Hasło -->
+      <div>
+        <label for="{{ form.password1.id_for_label }}" class="block text-gray-700 font-medium mb-1">Hasło</label>
         {{ form.password1 }}
-        <br />
+        {% if form.password1.errors %}
+          <p class="text-red-500 text-sm mt-1">{{ form.password1.errors.0 }}</p>
+        {% endif %}
+      </div>
 
-        <label for="id_password2">Confirm Password:</label>
+      <!-- Powtórz hasło -->
+      <div>
+        <label for="{{ form.password2.id_for_label }}" class="block text-gray-700 font-medium mb-1">Powtórz hasło</label>
         {{ form.password2 }}
-        <br />
+        {% if form.password2.errors %}
+          <p class="text-red-500 text-sm mt-1">{{ form.password2.errors.0 }}</p>
+        {% endif %}
+      </div>
 
-        <button type="submit">Register</button>
-        </form>
-        </div>
-    </body>
+      <!-- Przycisk -->
+      <div class="pt-3">
+        <button type="submit"
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-xl shadow-md transition duration-200">
+          Zarejestruj się
+        </button>
+      </div>
+    </form>
+  </div>
+
+</body>
 </html>

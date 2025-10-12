@@ -1,5 +1,6 @@
 <!-- home.html w Django template (czysty HTML + CSS + JS) -->
 <!DOCTYPE html>
+{% load filters %}
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
@@ -43,7 +44,7 @@
       <h1 class="text-xl font-bold mb-4">Your recent times</h1>
       <ul>
         {% for time in times %}
-          <li>{{ time.get_duration }} | {{time.category}}</li>
+          <li>{{ time.get_duration|format_duration }} | {{time.category}}</li>
         {% empty %}
           <li>No times recorded yet.</li>
         {% endfor %}

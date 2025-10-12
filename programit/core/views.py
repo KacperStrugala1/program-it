@@ -1,13 +1,11 @@
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from main.models import Time
+from programit.main.time_model import Time
 from django.contrib.auth.forms import *
 from django.utils import timezone
 import logging
 from django.contrib.auth import authenticate
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from django.contrib.auth.forms import UserCreationForm
 from .forms import RegisterForm
 
 def home_view(request):

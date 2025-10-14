@@ -10,8 +10,8 @@ from django.contrib import messages
 from .forms import RegisterForm
 
 def home_view(request):
-    times = Time.objects.all()
-    context = {'times': times,}
+    latest_times = Time.objects.order_by("-created_at")[:5]
+    context = {'time': latest_times,}
     
     try:
         action = request.POST.get("action")
@@ -25,7 +25,6 @@ def home_view(request):
             return redirect("home")
     except Exception as exc:
         logging.error(f"Error while POST method {exc}")
-    times = Time.objects.all()
     return render(request,"home.html", context)
     
 def stats_view(request):

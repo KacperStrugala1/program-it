@@ -5,6 +5,7 @@ class Time(models.Model):
     duration = models.DurationField(null=True, blank=True)
     category = models.CharField(max_length=50, null=True)
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE, null=True)
+    created_at = models.DateTimeField()
 
     def get_duration(self):
         try:

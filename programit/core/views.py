@@ -9,28 +9,27 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from .forms import RegisterForm
 
+
 def home_view(request):
     latest_times = Time.objects.order_by("-created_at")[:5]
-    context = {'time': latest_times,}
-    
+    context = {
+        "time": latest_times,
+    }
+
     try:
         action = request.POST.get("action")
         if request.method == "POST":
             if action == "start":
                 Time.objects.create(start_time=timezone.now())
             elif action == "stop":
-                last_time_object = Time.objects.latest('id')
+                last_time_object = Time.objects.latest("id")
                 last_time_object.stop_time = timezone.now()
                 last_time_object.save()
             return redirect("home")
     except Exception as exc:
         logging.error(f"Error while POST method {exc}")
-    return render(request,"home.html", context)
-    
-def stats_view(request):
-    times = Time.objects.all()
-    context = {'times': times,}
-    return render(request,"stats.html", context)
+    return render(request, "home.html", context)
+
 
 def login_view(request):
     if request.method == "POST":
@@ -40,12 +39,13 @@ def login_view(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('home')
+            return redirect("home")
         else:
-            messages.info(request,"invalid credentials")
-            return redirect('login')
+            messages.info(request, "invalid credentials")
+            return redirect("login")
     else:
         return render(request, "login.html")
+
 
 def register(request):
     if request.method == "POST":
@@ -57,13 +57,7 @@ def register(request):
         form = RegisterForm()
     return render(request, "register.html", {"form": form})
 
+
 def profile_view(request):
 
     return render(request, "profile.html")
-
-def work_view(request):
-
-    work_times = WorkTime.objects.all()
-    context = {'work_times': work_times}
-
-    return render(request, "work.html", context)

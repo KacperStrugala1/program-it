@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}ProgramIT{% endblock %}</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        background-color: #1e1e1e;
+        color: #abb2bf;
+        font-family: "Fira Code", monospace;
+      }
+      .vim-cursor {
+        display: inline-block;
+        width: 0.6ch;
+        background-color: #98c379;
+        animation: blink 1s steps(1) infinite;
+      }
+      @keyframes blink {
+        50% {
+          background: transparent;
+        }
+      }
+      .code-window {
+        background-color: #282c34;
+        border: 1px solid #3e4451;
+        border-radius: 0.5rem;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+      }
+      .status-bar {
+        background-color: #2c323c;
+        color: #5c6370;
+        font-size: 0.8rem;
+        border-top: 1px solid #3e4451;
+        padding: 0.3rem 1rem;
+      }
+    </style>
+  </head>
+
+  <body class="min-h-screen flex flex-col">
+    <!-- Pasek menu -->
+    <nav
+      class="flex justify-between items-center bg-[#21252b] text-[#98c379] px-6 py-2 border-b border-[#3e4451]"
+    >
+      <div class="flex space-x-4 text-sm">
+        <a href="{% url 'home' %}" class="hover:text-[#61afef]">home.html</a>
+        <a href="{% url 'account_login' %}" class="hover:text-[#61afef]"
+          >login</a
+        >
+      </div>
+      <div class="text-[#56b6c2] text-sm font-mono">
+        <span id="clock">--:--:--</span><span class="vim-cursor"></span>
+      </div>
+    </nav>
+
+    <!-- Miejsce na treść -->
+    <main class="flex-grow p-6 flex flex-col items-center">
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="status-bar text-center">
+      NORMAL | file: {{ request.path|default:"home.html" }} | utf-8 |
+      python-mode | ln: 42 col: 2
+    </footer>
+
+    <script>
+      // Zegar w menu
+      function updateClock() {
+        const now = new Date();
+        const h = now.getHours().toString().padStart(2, "0");
+        const m = now.getMinutes().toString().padStart(2, "0");
+        const s = now.getSeconds().toString().padStart(2, "0");
+        document.getElementById("clock").textContent = `${h}:${m}:${s}`;
+      }
+      setInterval(updateClock, 1000);
+      updateClock();
+    </script>
+  </body>
+</html>

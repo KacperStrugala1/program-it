@@ -1,109 +1,110 @@
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
+{% extends "base.html" %} {% block title %}Stoper | ProgramIT{% endblock %} {% block content %}
     <style>
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
 
+      .profile-container {
+        background-color: #fff;
+        width: 80%;
+        max-width: 900px;
+        border-radius: 20px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        display: flex;
+        padding: 40px;
+        gap: 40px;
+      }
+
+      .profile-avatar {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+      }
+
+      .profile-avatar img {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 5px solid #2a9d8f;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .profile-info {
+        flex: 2;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .profile-info h1 {
+        margin: 0;
+        font-size: 36px;
+        color: #264653;
+      }
+
+      .profile-info p {
+        font-size: 18px;
+        color: #555;
+        line-height: 1.6;
+        margin-top: 10px;
+      }
+
+      .profile-score {
+        margin-top: 30px;
+        font-size: 24px;
+        font-weight: bold;
+        color: #e76f51;
+        display: inline-block;
+        background-color: #ffe9e0;
+        padding: 10px 20px;
+        border-radius: 15px;
+      }
+
+      @media (max-width: 768px) {
         .profile-container {
-            background-color: #fff;
-            width: 80%;
-            max-width: 900px;
-            border-radius: 20px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-            display: flex;
-            padding: 40px;
-            gap: 40px;
-        }
-
-        .profile-avatar {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-        }
-
-        .profile-avatar img {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 5px solid #2a9d8f;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+          flex-direction: column;
+          align-items: center;
+          padding: 20px;
         }
 
         .profile-info {
-            flex: 2;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .profile-info h1 {
-            margin: 0;
-            font-size: 36px;
-            color: #264653;
-        }
-
-        .profile-info p {
-            font-size: 18px;
-            color: #555;
-            line-height: 1.6;
-            margin-top: 10px;
+          text-align: center;
         }
 
         .profile-score {
-            margin-top: 30px;
-            font-size: 24px;
-            font-weight: bold;
-            color: #e76f51;
-            display: inline-block;
-            background-color: #ffe9e0;
-            padding: 10px 20px;
-            border-radius: 15px;
+          margin-top: 20px;
         }
-
-        @media (max-width: 768px) {
-            .profile-container {
-                flex-direction: column;
-                align-items: center;
-                padding: 20px;
-            }
-
-            .profile-info {
-                text-align: center;
-            }
-
-            .profile-score {
-                margin-top: 20px;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="profile-container">
-        <div class="profile-avatar">
-            <img src="" alt="">
-        </div>
-        <div class="profile-info">
-            <h1>username</h1>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                when an unknown printer took a galley of type and scrambled it to make a type 
-                specimen book</p>
-            <p><img src="/programit/static/github_icon.jpg", alt="github_icon"> <a href="https://github.com/">KacperStrugala</a></p>
-            <div class="profile-score">Score: 1250</div>
-        </div>
+      <div class="profile-avatar">
+        <img src="" alt="" />
+      </div>
+      <div class="profile-info">
+        <h1>username</h1>
+        <p>
+          Lorem Ipsum is simply dummy text of the printing and typesetting
+          industry. Lorem Ipsum has been the industry's standard dummy text ever
+          since the 1500s, when an unknown printer took a galley of type and
+          scrambled it to make a type specimen book
+        </p>
+        <p>
+          <img src="/programit/static/github_icon.jpg" , alt="github_icon" />
+          <a href="https://github.com/">KacperStrugala</a>
+        </p>
+        <div class="profile-score">Score: 1250</div>
+      </div>
     </div>
-</body>
+  </body>
+{% endblock %}
 </html>

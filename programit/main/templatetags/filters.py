@@ -2,6 +2,7 @@ from django import template
 
 register = template.Library()
 
+
 @register.filter
 def format_duration(value):
     total_seconds = int(value.total_seconds())
@@ -9,4 +10,3 @@ def format_duration(value):
     minutes = (total_seconds % 3600) // 60
     seconds = total_seconds % 60
     return f"{hours:02}:{minutes:02}:{seconds:02}"
-

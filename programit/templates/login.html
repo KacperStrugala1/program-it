@@ -1,53 +1,75 @@
 {% extends "base.html" %}
-{% block title %}Stoper | ProgramIT{% endblock %}
+{% block title %}Login | ProgramIT{% endblock %}
 
 {% block content %}
-<body class="min-h-screen bg-gray-100 flex items-center justify-center">
-  <div class="bg-[#21252b] text-[#5c6370] text-xs border-b border-[#3e4451] shadow rounded-2xl p-8 w-96">
-    <h1 class="text-2xl font-bold text-center mb-6">Logging</h1>
+<body class="min-h-screen bg-[#1e1e1e] flex items-center justify-center font-['Fira_Code',monospace]">
 
-    <form method="POST" action="/login/" class="space-y-4">
-      {% csrf_token %}
+  <div class="bg-[#282c34] border border-[#3e4451] rounded-2xl shadow-lg p-8 w-full max-w-md text-[#abb2bf] code-window">
+
+    <h1 class="text-2xl font-bold text-center text-[#61afef] mb-2 tracking-wide">
+      <span class="text-[#c678dd]">def</span> Login<span class="text-[#56b6c2]">()</span>:
+    </h1>
+    <p class="text-center text-[#5c6370] mb-6">
+      <span class="text-[#98c379]">#</span> Sign in to your account
+    </p>
+
+    {% if form.non_field_errors %}
+    <div class="mb-4 bg-[#2c323c] border border-[#e06c75] text-[#e06c75] text-sm p-2 rounded">
+      {% for err in form.non_field_errors %}
+      <div>{{ err }}</div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="POST" action="{% url 'login' %}" class="space-y-4">
       
+
+      <!-- USERNAME -->
       <div>
-        <label for="username" class="block text-gray-700 font-medium mb-1">
-          Name account
+        {% csrf_token %}
+        <label for="username" class="block text-[#56b6c2] font-medium mb-1">
+          username<span class="text-[#5c6370]"> =</span>
         </label>
         <input
           type="text"
           id="username"
           name="username"
           required
-          class="w-full border rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          class="bg-[#21252b] text-[#abb2bf] border border-[#3e4451] rounded-xl w-full px-3 py-2 focus:ring-2 focus:ring-[#61afef] focus:outline-none"
         />
       </div>
 
+      <!-- PASSWORD -->
       <div>
-        <label for="password" class="block text-gray-700 font-medium mb-1">
-          Password
+        <label for="password" class="block text-[#56b6c2] font-medium mb-1">
+          password<span class="text-[#5c6370]"> =</span>
         </label>
         <input
           type="password"
           id="password"
           name="password"
           required
-          class="w-full border rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          class="bg-[#21252b] text-[#abb2bf] border border-[#3e4451] rounded-xl w-full px-3 py-2 focus:ring-2 focus:ring-[#61afef] focus:outline-none"
         />
       </div>
 
-      <button
-        type="submit"
-        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-xl transition"
-      >
-        Log in
-      </button>
+      <div class="pt-4">
+        <button
+          type="submit"
+          class="w-full bg-[#98c379] hover:bg-[#7cbf69] text-[#1e1e1e] font-semibold py-2.5 rounded-xl transition duration-200 shadow"
+        >
+          <span class="text-[#1e1e1e]">return</span> <span class="text-[#1e1e1e] font-bold">Login</span>
+        </button>
+      </div>
     </form>
 
-    <p class="text-center text-sm text-gray-600 mt-4">
-      Don't have an account?
-      <a href="/register" class="text-blue-600 hover:underline">Register</a>
+    <p class="text-center text-[#5c6370] text-sm mt-4">
+      <span class="text-[#98c379]">#</span> Don't have an account?
+      <a href="{% url 'register' %}" class="text-[#61afef] hover:underline">Register</a>
     </p>
+
   </div>
+
 </body>
 {% endblock %}
 </html>

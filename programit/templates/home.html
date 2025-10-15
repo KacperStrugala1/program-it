@@ -1,211 +1,159 @@
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ProgramIT</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
-
-  <style>
-    body {
-      background-color: #1e1e1e;
-      color: #abb2bf;
-      font-family: 'Fira Code', monospace;
-    }
-    .vim-cursor {
-      display: inline-block;
-      width: 0.6ch;
-      background-color: #98c379;
-      animation: blink 1s steps(1) infinite;
-    }
-    @keyframes blink {
-      50% { background: transparent; }
-    }
-    .code-window {
-      background-color: #282c34;
-      border: 1px solid #3e4451;
-      border-radius: 0.5rem;
-      box-shadow: 0 0 10px rgba(0,0,0,0.4);
-    }
-    .line-num {
-      color: #5c6370;
-      user-select: none;
-      width: 2.5rem;
-      text-align: right;
-      padding-right: 0.5rem;
-    }
-    .code-line {
-      color: #abb2bf;
-      font-family: 'Fira Code', monospace;
-      padding-left: 0.5rem;
-    }
-    .kw { color: #c678dd; }
-    .fn { color: #61afef; }
-    .var { color: #e5c07b; }
-    .val { color: #98c379; }
-    .status-bar {
-      background-color: #2c323c;
-      color: #5c6370;
-      font-size: 0.8rem;
-      border-top: 1px solid #3e4451;
-      padding: 0.3rem 1rem;
-    }
-  </style>
-</head>
-
-<body class="min-h-screen flex flex-col">
-
-  <!-- Pasek menu -->
-  <nav class="flex justify-between items-center bg-[#21252b] text-[#98c379] px-6 py-2 border-b border-[#3e4451]">
-    <div class="flex space-x-4 text-sm">
-      <a href="#" class="hover:text-[#61afef]">home.html</a>
-      <a href="#" class="hover:text-[#61afef]">stats.py</a>
-      <a href="#" class="hover:text-[#61afef]">work.log</a>
-      <a href="#" class="hover:text-[#61afef]">login</a>
+{% extends "base.html" %} {% block title %}Stoper | ProgramIT{% endblock %} 
+{% block content %}
+<div
+  class="flex flex-col md:flex-row justify-center items-start gap-10 mt-10 w-full"
+>
+  <!-- Okno kodu -->
+  <div class="code-window w-full md:w-[40rem] overflow-hidden">
+    <div
+      class="bg-[#21252b] text-[#5c6370] px-4 py-1 text-xs border-b border-[#3e4451]"
+    >
+      ~/stoper/home.html
     </div>
-    <div class="text-[#56b6c2] text-sm font-mono">
-      <span id="clock">--:--:--</span><span class="vim-cursor"></span>
-    </div>
-  </nav>
-
-  <!-- Główna sekcja -->
-  <main class="flex flex-col md:flex-row justify-center items-start gap-10 mt-10 px-4 flex-grow">
-
-    <!-- Okno kodu -->
-    <div class="code-window w-full md:w-[40rem] overflow-hidden">
-      <div class="bg-[#21252b] text-[#5c6370] px-4 py-1 text-xs border-b border-[#3e4451]">
-        ~/stoper/home.html
-      </div>
-      <div class="p-4 font-mono text-sm leading-6">
-        <div class="flex"><div class="line-num">1</div><div class="code-line"><span class="kw">def</span> <span class="fn">stoper</span>():</div></div>
-        <div class="flex"><div class="line-num">2</div><div class="code-line">&nbsp;&nbsp;<span class="var">time</span> = <span class="val">"00:00"</span></div></div>
-        <div class="flex"><div class="line-num">3</div><div class="code-line">&nbsp;&nbsp;<span class="kw">while</span> <span class="var">running</span>:</div></div>
-        <div class="flex"><div class="line-num">4</div><div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">update</span>(<span class="var">display</span>)</div></div>
-        <div class="flex"><div class="line-num">5</div><div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">sleep</span>(1)</div></div>
-        <div class="flex"><div class="line-num">6</div><div class="code-line">&nbsp;&nbsp;<span class="fn">return</span> <span class="val">time</span></div></div>
-      </div>
-    </div>
-
-    <!-- Stoper -->
-    <div class="flex flex-col items-center w-full md:w-80 space-y-6">
-
-      <div class="bg-[#282c34] border border-[#3e4451] rounded-xl p-6 w-full text-center code-window">
-        <h1 class="text-[#61afef] text-lg font-bold mb-4">STOPER</h1>
-        <div id="display" class="text-4xl font-mono text-[#98c379] mb-6">00:00</div>
-
-        <div class="flex justify-center space-x-4">
-          <button id="start" class="px-4 py-2 rounded bg-[#98c379] text-[#1e1e1e] font-semibold hover:bg-[#7cbf69] transition">▶ Start</button>
-          <button id="stop" class="px-4 py-2 rounded bg-[#e06c75] text-[#1e1e1e] font-semibold hover:bg-[#c45b64] transition">■ Stop</button>
-          <button id="reset" class="px-4 py-2 rounded bg-[#d19a66] text-[#1e1e1e] font-semibold hover:bg-[#c18456] transition">↺ Reset</button>
+    <div class="p-4 font-mono text-sm leading-6">
+      <div class="flex">
+        <div class="text-[#5c6370] w-8 text-right pr-2">1</div>
+        <div>
+          <span class="text-[#c678dd]">def</span>
+          <span class="text-[#61afef]">stoper</span>():
         </div>
       </div>
+      <div class="flex">
+        <div class="text-[#5c6370] w-8 text-right pr-2">2</div>
+        <div>&nbsp;&nbsp;time = "00:00"</div>
+      </div>
+      <div class="flex">
+        <div class="text-[#5c6370] w-8 text-right pr-2">3</div>
+        <div>&nbsp;&nbsp;while running:</div>
+      </div>
+      <div class="flex">
+        <div class="text-[#5c6370] w-8 text-right pr-2">4</div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;update(display)</div>
+      </div>
+      <div class="flex">
+        <div class="text-[#5c6370] w-8 text-right pr-2">5</div>
+        <div>&nbsp;&nbsp;&nbsp;&nbsp;sleep(1)</div>
+      </div>
+      <div class="flex">
+        <div class="text-[#5c6370] w-8 text-right pr-2">6</div>
+        <div>&nbsp;&nbsp;return time</div>
+      </div>
+    </div>
+  </div>
 
-      <div class="bg-[#282c34] border border-[#3e4451] rounded-xl p-6 w-full text-center code-window">
-        <h2 class="text-[#61afef] text-base font-bold mb-4">Recent Times</h2>
-        {%for latest_time in latest_times%}
-        <ul id="recent" class="font-mono text-sm text-[#abb2bf] space-y-1 text-left ml-4">
-          <li>{{latest_time}}</li>
-        </ul>
-        {% endfor %}
+  <!-- Stoper -->
+  <div class="flex flex-col items-center w-full md:w-80 space-y-6">
+    <div
+      class="bg-[#282c34] border border-[#3e4451] rounded-xl p-6 w-full text-center code-window"
+    >
+      <h1 class="text-[#61afef] text-lg font-bold mb-4">STOPER</h1>
+      <div id="display" class="text-4xl font-mono text-[#98c379] mb-6">
+        00:00
       </div>
 
+      <div class="flex justify-center space-x-4">
+        <button
+          id="start"
+          class="px-4 py-2 rounded bg-[#98c379] text-[#1e1e1e] font-semibold hover:bg-[#7cbf69] transition"
+        >
+          ▶ Start
+        </button>
+        <button
+          id="stop"
+          class="px-4 py-2 rounded bg-[#e06c75] text-[#1e1e1e] font-semibold hover:bg-[#c45b64] transition"
+        >
+          ■ Stop
+        </button>
+        <button
+          id="reset"
+          class="px-4 py-2 rounded bg-[#d19a66] text-[#1e1e1e] font-semibold hover:bg-[#c18456] transition"
+        >
+          ↺ Reset
+        </button>
+      </div>
     </div>
-  </main>
 
-  <footer class="status-bar text-center">
-    NORMAL | file: home.html | utf-8 | python-mode | ln: 42 col: 2
-  </footer>
+    <div
+      class="bg-[#282c34] border border-[#3e4451] rounded-xl p-6 w-full text-center code-window"
+    >
+      <h2 class="text-[#61afef] text-base font-bold mb-4">Recent Times</h2>
+      <ul
+        id="recent"
+        class="font-mono text-sm text-[#abb2bf] space-y-1 text-left ml-4"
+      ></ul>
+    </div>
+  </div>
+</div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const display = document.getElementById("display");
-      const startBtn = document.getElementById("start");
-      const stopBtn = document.getElementById("stop");
-      const resetBtn = document.getElementById("reset");
-      const recentList = document.getElementById("recent");
-      const clock = document.getElementById("clock");
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const display = document.getElementById("display");
+    const startBtn = document.getElementById("start");
+    const stopBtn = document.getElementById("stop");
+    const resetBtn = document.getElementById("reset");
+    const recentList = document.getElementById("recent");
 
-      let startTime = 0;
-      let elapsedTime = 0;
-      let timerInterval = null;
-      let running = false;
+    let startTime = 0,
+      elapsedTime = 0,
+      timer = null,
+      running = false;
 
-      function formatTime(ms) {
-        const totalSeconds = Math.floor(ms / 1000);
-        const minutes = Math.floor(totalSeconds / 60);
-        const seconds = totalSeconds % 60;
-        return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
-      }
+    function fmt(ms) {
+      const s = Math.floor(ms / 1000);
+      const m = Math.floor(s / 60);
+      return `${m.toString().padStart(2, "0")}:${(s % 60)
+        .toString()
+        .padStart(2, "0")}`;
+    }
 
-      function updateDisplay() {
-        display.textContent = formatTime(elapsedTime);
-      }
+    function update() {
+      display.textContent = fmt(elapsedTime);
+    }
 
-      function startTimer() {
-        if (running) return;
-        running = true;
-        startTime = Date.now() - elapsedTime;
-        timerInterval = setInterval(() => {
-          elapsedTime = Date.now() - startTime;
-          updateDisplay();
-        }, 100);
-      }
+    startBtn.onclick = () => {
+      if (running) return;
+      running = true;
+      startTime = Date.now() - elapsedTime;
+      timer = setInterval(() => {
+        elapsedTime = Date.now() - startTime;
+        update();
+      }, 100);
+    };
 
-      function stopTimer() {
-        if (!running) return;
-        running = false;
-        clearInterval(timerInterval);
+    stopBtn.onclick = () => {
+      if (!running) return;
+      running = false;
+      clearInterval(timer);
+      const time = fmt(elapsedTime);
+      const li = document.createElement("li");
+      li.textContent = "• " + time;
+      li.className = "text-[#98c379]";
+      recentList.prepend(li);
+      localStorage.setItem(
+        "recentTimes",
+        JSON.stringify(
+          Array.from(recentList.querySelectorAll("li")).map(
+            (l) => l.textContent
+          )
+        )
+      );
+    };
 
-        const timeString = formatTime(elapsedTime);
-        addRecentTime(timeString);
-        saveTimes();
-      }
+    resetBtn.onclick = () => {
+      running = false;
+      clearInterval(timer);
+      elapsedTime = 0;
+      update();
+    };
 
-      function resetTimer() {
-        stopTimer();
-        elapsedTime = 0;
-        updateDisplay();
-      }
-
-      // ⏱ Eventy
-      startBtn.addEventListener("click", startTimer);
-      stopBtn.addEventListener("click", stopTimer);
-      resetBtn.addEventListener("click", resetTimer);
-
-      // 🕒 Recent Times + localStorage
-      function addRecentTime(time) {
-        const li = document.createElement("li");
-        li.textContent = `• ${time}`;
-        li.className = "animate-pulse text-[#98c379]";
-        recentList.prepend(li);
-      }
-
-      function saveTimes() {
-        const times = Array.from(recentList.querySelectorAll("li")).map(li => li.textContent.replace("• ", ""));
-        localStorage.setItem("recentTimes", JSON.stringify(times));
-      }
-
-      function loadTimes() {
-        const stored = JSON.parse(localStorage.getItem("recentTimes") || "[]");
-        stored.forEach(addRecentTime);
-      }
-
-      // 🧭 Zegar górny
-      function updateClock() {
-        const now = new Date();
-        const h = now.getHours().toString().padStart(2, "0");
-        const m = now.getMinutes().toString().padStart(2, "0");
-        const s = now.getSeconds().toString().padStart(2, "0");
-        clock.textContent = `${h}:${m}:${s}`;
-      }
-      setInterval(updateClock, 1000);
-      updateClock();
-
-      // Start
-      loadTimes();
-      updateDisplay();
+    JSON.parse(localStorage.getItem("recentTimes") || "[]").forEach((t) => {
+      const li = document.createElement("li");
+      li.textContent = t;
+      li.className = "text-[#98c379]";
+      recentList.append(li);
     });
-  </script>
-</body>
-</html>
+
+    update();
+  });
+</script>
+{% endblock %}

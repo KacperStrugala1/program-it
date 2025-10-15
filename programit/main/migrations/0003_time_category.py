@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0002_remove_time_duration_alter_time_start_time'),
+        ("main", "0002_remove_time_duration_alter_time_start_time"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='time',
-            name='category',
+            model_name="time",
+            name="category",
             field=models.CharField(max_length=50, null=True),
         ),
     ]

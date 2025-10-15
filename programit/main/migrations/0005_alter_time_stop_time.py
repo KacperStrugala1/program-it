@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0004_time_user'),
+        ("main", "0004_time_user"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='time',
-            name='stop_time',
+            model_name="time",
+            name="stop_time",
             field=models.DurationField(blank=True, null=True),
         ),
     ]

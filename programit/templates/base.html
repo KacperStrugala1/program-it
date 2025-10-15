@@ -50,10 +50,19 @@
       class="flex justify-between items-center bg-[#21252b] text-[#98c379] px-6 py-2 border-b border-[#3e4451]"
     >
       <div class="flex space-x-4 text-sm">
-        <a href="{% url 'home' %}" class="hover:text-[#61afef]">home.html</a>
-        <a href="{% url 'account_login' %}" class="hover:text-[#61afef]"
-          >login</a
-        >
+        
+        {% if user.is_authenticated %}
+        <p>hi, {{user.username}}! |</p>
+        <a href="{% url 'home' %}" class="hover:text-[#61afef]"> home.html |</a> 
+        <a href="{% url 'profile' %}" class="hover:text-[#61afef]"
+            > profile |</a> 
+        <a href="{% url 'logout' %}" class="hover:text-[#e06c75]">logout</a>
+        {% else %}
+          <a href="{% url 'home' %}" class="hover:text-[#61afef]">home.html |</a>  
+          <a href="{% url 'account_login' %}" class="hover:text-[#61afef]"
+            > login</a
+          >
+        {% endif %}
       </div>
       <div class="text-[#56b6c2] text-sm font-mono">
         <span id="clock">--:--:--</span><span class="vim-cursor"></span>

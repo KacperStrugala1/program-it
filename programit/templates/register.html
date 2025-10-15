@@ -1,86 +1,89 @@
-{%extends 'base.html'%}{% block title %}Stoper | ProgramIT{% endblock %} {% block content %}
-  <body
-    class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100 flex items-center justify-center"
-  >
-    <div class="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-md">
-      <h1 class="text-3xl font-bold text-center text-gray-800 mb-2">
-        Rejestracja
-      </h1>
-      <p class="text-center text-gray-500 mb-6">
-        Utwórz nowe konto, aby rozpocząć!
-      </p>
+{% extends "base.html" %}
+{% block title %}Register | ProgramIT{% endblock %}
+{% load filters %}
+{% block content %}
+<body class="min-h-screen bg-[#1e1e1e] flex items-center justify-center font-['Fira_Code',monospace]">
 
-      {% if form.non_field_errors %}
-      <div class="mb-4 text-red-600 text-sm">
-        {% for err in form.non_field_errors %}
-        <div>{{ err }}</div>
-        {% endfor %}
-      </div>
-      {% endif %}
+  <div class="bg-[#282c34] border border-[#3e4451] rounded-2xl shadow-lg p-8 w-full max-w-md text-[#abb2bf] code-window">
 
-      <form method="post" action="{% url 'register' %}" class="space-y-5">
-        {% csrf_token %}
+    <h1 class="text-2xl font-bold text-center text-[#61afef] mb-2 tracking-wide">
+      <span class="text-[#c678dd]">def</span> Register<span class="text-[#56b6c2]">()</span>:
+    </h1>
+    <p class="text-center text-[#5c6370] mb-6">
+      <span class="text-[#98c379]">#</span> Create a new account
+    </p>
 
-        <!-- Nazwa użytkownika -->
-        <div>
-          <label
-            for="{{ form.username.id_for_label }}"
-            class="block text-gray-700 font-medium mb-1"
-            >Nazwa użytkownika</label
-          >
-          {{ form.username }} {% if form.username.errors %}
-          <p class="text-red-500 text-sm mt-1">{{ form.username.errors.0 }}</p>
-          {% endif %}
-        </div>
-
-        <!-- Email -->
-        <div>
-          <label
-            for="{{ form.email.id_for_label }}"
-            class="block text-gray-700 font-medium mb-1"
-            >Email</label
-          >
-          {{ form.email }} {% if form.email.errors %}
-          <p class="text-red-500 text-sm mt-1">{{ form.email.errors.0 }}</p>
-          {% endif %}
-        </div>
-
-        <!-- Hasło -->
-        <div>
-          <label
-            for="{{ form.password1.id_for_label }}"
-            class="block text-gray-700 font-medium mb-1"
-            >Hasło</label
-          >
-          {{ form.password1 }} {% if form.password1.errors %}
-          <p class="text-red-500 text-sm mt-1">{{ form.password1.errors.0 }}</p>
-          {% endif %}
-        </div>
-
-        <!-- Powtórz hasło -->
-        <div>
-          <label
-            for="{{ form.password2.id_for_label }}"
-            class="block text-gray-700 font-medium mb-1"
-            >Powtórz hasło</label
-          >
-          {{ form.password2 }} {% if form.password2.errors %}
-          <p class="text-red-500 text-sm mt-1">{{ form.password2.errors.0 }}</p>
-          {% endif %}
-        </div>
-
-        <!-- Przycisk -->
-        <div class="pt-3">
-          <button
-            type="submit"
-            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-xl shadow-md transition duration-200"
-          >
-            Zarejestruj się
-          </button>
-        </div>
-      </form>
+    {% if form.non_field_errors %}
+    <div class="mb-4 bg-[#2c323c] border border-[#e06c75] text-[#e06c75] text-sm p-2 rounded">
+      {% for err in form.non_field_errors %}
+      <div>{{ err }}</div>
+      {% endfor %}
     </div>
-  </body>
-  {% endblock %}
-</html>
+    {% endif %}
 
+    <form method="post" action="{% url 'register' %}" class="space-y-4">
+      {% csrf_token %}
+
+      <!-- USERNAME -->
+      <div>
+        <label for="{{ form.username.id_for_label }}" class="block text-[#56b6c2] font-medium mb-1">
+          username<span class="text-[#5c6370]"> =</span>
+        </label>
+        {{ form.username|add_class:"bg-[#21252b] text-[#abb2bf] border border-[#3e4451] rounded-xl w-full px-3 py-2 focus:ring-2 focus:ring-[#61afef] focus:outline-none" }}
+        {% if form.username.errors %}
+        <p class="text-[#e06c75] text-sm mt-1">{{ form.username.errors.0 }}</p>
+        {% endif %}
+      </div>
+
+      <!-- EMAIL -->
+      <div>
+        <label for="{{ form.email.id_for_label }}" class="block text-[#56b6c2] font-medium mb-1">
+          email<span class="text-[#5c6370]"> =</span>
+        </label>
+        {{ form.email|add_class:"bg-[#21252b] text-[#abb2bf] border border-[#3e4451] rounded-xl w-full px-3 py-2 focus:ring-2 focus:ring-[#61afef] focus:outline-none" }}
+        {% if form.email.errors %}
+        <p class="text-[#e06c75] text-sm mt-1">{{ form.email.errors.0 }}</p>
+        {% endif %}
+      </div>
+
+      <!-- PASSWORD 1 -->
+      <div>
+        <label for="{{ form.password1.id_for_label }}" class="block text-[#56b6c2] font-medium mb-1">
+          password<span class="text-[#5c6370]"> =</span>
+        </label>
+        {{ form.password1|add_class:"bg-[#21252b] text-[#abb2bf] border border-[#3e4451] rounded-xl w-full px-3 py-2 focus:ring-2 focus:ring-[#61afef] focus:outline-none" }}
+        {% if form.password1.errors %}
+        <p class="text-[#e06c75] text-sm mt-1">{{ form.password1.errors.0 }}</p>
+        {% endif %}
+      </div>
+
+      <!-- PASSWORD 2 -->
+      <div>
+        <label for="{{ form.password2.id_for_label }}" class="block text-[#56b6c2] font-medium mb-1">
+          repeat_password<span class="text-[#5c6370]"> =</span>
+        </label>
+        {{ form.password2|add_class:"bg-[#21252b] text-[#abb2bf] border border-[#3e4451] rounded-xl w-full px-3 py-2 focus:ring-2 focus:ring-[#61afef] focus:outline-none" }}
+        {% if form.password2.errors %}
+        <p class="text-[#e06c75] text-sm mt-1">{{ form.password2.errors.0 }}</p>
+        {% endif %}
+      </div>
+
+      <div class="pt-4">
+        <button
+          type="submit"
+          class="w-full bg-[#98c379] hover:bg-[#7cbf69] text-[#1e1e1e] font-semibold py-2.5 rounded-xl transition duration-200 shadow"
+        >
+          <span class="text-[#1e1e1e]">return</span> <span class="text-[#1e1e1e] font-bold">Register</span>
+        </button>
+      </div>
+    </form>
+
+    <p class="text-center text-[#5c6370] text-sm mt-4">
+      <span class="text-[#98c379]">#</span> Already have an account?
+      <a href="{% url 'login' %}" class="text-[#61afef] hover:underline">Login</a>
+    </p>
+  </div>
+
+</body>
+{% endblock %}
+</html>

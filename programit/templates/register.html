@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Register | ProgramIT{% endblock %}
-{% load filters %}
+
 {% block content %}
 <body class="min-h-screen bg-[#1e1e1e] flex items-center justify-center font-['Fira_Code',monospace]">
 
@@ -21,7 +21,7 @@
     </div>
     {% endif %}
 
-    <form method="post" action="{% url 'register' %}" class="space-y-4">
+    <form method="post" action="{% url 'register' %}" class="space-y-5">
       {% csrf_token %}
 
       <!-- USERNAME -->
@@ -29,7 +29,7 @@
         <label for="{{ form.username.id_for_label }}" class="block text-[#56b6c2] font-medium mb-1">
           username<span class="text-[#5c6370]"> =</span>
         </label>
-        {{ form.username|add_class:"bg-[#21252b] text-[#abb2bf] border border-[#3e4451] rounded-xl w-full px-3 py-2 focus:ring-2 focus:ring-[#61afef] focus:outline-none" }}
+        {{ form.username }}
         {% if form.username.errors %}
         <p class="text-[#e06c75] text-sm mt-1">{{ form.username.errors.0 }}</p>
         {% endif %}
@@ -40,7 +40,7 @@
         <label for="{{ form.email.id_for_label }}" class="block text-[#56b6c2] font-medium mb-1">
           email<span class="text-[#5c6370]"> =</span>
         </label>
-        {{ form.email|add_class:"bg-[#21252b] text-[#abb2bf] border border-[#3e4451] rounded-xl w-full px-3 py-2 focus:ring-2 focus:ring-[#61afef] focus:outline-none" }}
+        {{ form.email }}
         {% if form.email.errors %}
         <p class="text-[#e06c75] text-sm mt-1">{{ form.email.errors.0 }}</p>
         {% endif %}
@@ -49,9 +49,9 @@
       <!-- PASSWORD 1 -->
       <div>
         <label for="{{ form.password1.id_for_label }}" class="block text-[#56b6c2] font-medium mb-1">
-          password<span class="text-[#5c6370]"> =</span>
+          password1<span class="text-[#5c6370]"> =</span>
         </label>
-        {{ form.password1|add_class:"bg-[#21252b] text-[#abb2bf] border border-[#3e4451] rounded-xl w-full px-3 py-2 focus:ring-2 focus:ring-[#61afef] focus:outline-none" }}
+        {{ form.password1 }}
         {% if form.password1.errors %}
         <p class="text-[#e06c75] text-sm mt-1">{{ form.password1.errors.0 }}</p>
         {% endif %}
@@ -60,9 +60,9 @@
       <!-- PASSWORD 2 -->
       <div>
         <label for="{{ form.password2.id_for_label }}" class="block text-[#56b6c2] font-medium mb-1">
-          repeat_password<span class="text-[#5c6370]"> =</span>
+          password2<span class="text-[#5c6370]"> =</span>
         </label>
-        {{ form.password2|add_class:"bg-[#21252b] text-[#abb2bf] border border-[#3e4451] rounded-xl w-full px-3 py-2 focus:ring-2 focus:ring-[#61afef] focus:outline-none" }}
+        {{ form.password2 }}
         {% if form.password2.errors %}
         <p class="text-[#e06c75] text-sm mt-1">{{ form.password2.errors.0 }}</p>
         {% endif %}
@@ -73,7 +73,8 @@
           type="submit"
           class="w-full bg-[#98c379] hover:bg-[#7cbf69] text-[#1e1e1e] font-semibold py-2.5 rounded-xl transition duration-200 shadow"
         >
-          <span class="text-[#1e1e1e]">return</span> <span class="text-[#1e1e1e] font-bold">Register</span>
+          <span class="text-[#1e1e1e]">return</span>
+          <span class="text-[#1e1e1e] font-bold">Register</span>
         </button>
       </div>
     </form>
@@ -84,6 +85,25 @@
     </p>
   </div>
 
+  <style>
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      background-color: #21252b !important;
+      color: #abb2bf !important;
+      border: 1px solid #3e4451 !important;
+      border-radius: 0.5rem;
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      font-family: "Fira Code", monospace;
+      transition: all 0.2s ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #61afef !important;
+      box-shadow: 0 0 6px #61afef44;
+    }
+  </style>
 </body>
 {% endblock %}
-</html>

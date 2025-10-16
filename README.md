@@ -1,4 +1,35 @@
-App is still in early building phase, if you want to add some code:
+# Program-It
+
+Program-It is a web application designed to help new devs and advanced programmers work on their projects by improving productivity, tracking work sessions, and staying motivated through data-driven insights and leaderboards.
+It provides tools for time tracking, focus management, and performance comparison in a simple, web-based interface.
+
+This project is currently in an early development stage. Contributions and feedback are welcome.
+
+---
+
+## Features
+
+- Work time tracking and session logging  
+- Productivity statistics and focus analysis  
+- Leaderboards for motivation and comparison  
+- User authentication and personalized dashboards  
+- Modular Django architecture for easy feature expansion  
+
+---
+
+## Tech Stack
+
+| Component | Technology |
+|------------|-------------|
+| Backend | Python (Django) |
+| Frontend | HTML, CSS, JavaScript |
+| Database | SQLite |
+
+---
+
+## Installation and Setup
+
+Follow the steps below to run the application locally.
 
 1. Clone repo
 ```bash

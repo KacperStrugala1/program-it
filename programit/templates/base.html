@@ -53,14 +53,14 @@
         
         {% if user.is_authenticated %}
         <p>hi, {{user.username}}! |</p>
-        <a href="{% url 'home' %}" class="hover:text-[#61afef]"> home.html |</a> 
+        <a href="{% url 'home' %}" class="hover:text-[#61afef]"> home.html </a> 
         <a href="{% url 'profile' %}" class="hover:text-[#61afef]"
-            > profile |</a> 
+            >profile </a>
         <a href="{% url 'logout' %}" class="hover:text-[#e06c75]">logout</a>
         {% else %}
-          <a href="{% url 'home' %}" class="hover:text-[#61afef]">home.html |</a>  
+          <a href="{% url 'home' %}" class="hover:text-[#61afef]">home.html</a>
           <a href="{% url 'account_login' %}" class="hover:text-[#61afef]"
-            > login</a
+            > login </a
           >
         {% endif %}
       </div>

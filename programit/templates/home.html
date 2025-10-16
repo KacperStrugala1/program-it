@@ -91,7 +91,6 @@
     const startBtn = document.getElementById("start");
     const stopBtn = document.getElementById("stop");
     const resetBtn = document.getElementById("reset");
-    const recentList = document.getElementById("recent");
 
     let startTime = 0,
       elapsedTime = 0,
@@ -125,9 +124,6 @@
       running = false;
       clearInterval(timer);
       const time = fmt(elapsedTime);
-      const li = document.createElement("li");
-      li.textContent = "• " + time;
-      li.className = "text-[#98c379]";
       recentList.prepend(li);
       localStorage.setItem(
         "recentTimes",
@@ -146,14 +142,6 @@
       update();
     };
 
-    JSON.parse(localStorage.getItem("recentTimes") || "[]").forEach((t) => {
-      const li = document.createElement("li");
-      li.textContent = t;
-      li.className = "text-[#98c379]";
-      recentList.append(li);
-    });
-
-    update();
   });
 </script>
 {% endblock %}

@@ -8,7 +8,8 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from .forms import RegisterForm
-
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 
 def home_view(request):
     latest_times = Time.objects.order_by("-created_at")[:5]
@@ -56,7 +57,11 @@ def register(request):
         form = RegisterForm()
     return render(request, "register.html", {"form": form})
 
+def logout_view(request):
+    logout(request)
+    return redirect("home")
 
+@login_required(login_url="login")
 def profile_view(request):
 
     return render(request, "profile.html")

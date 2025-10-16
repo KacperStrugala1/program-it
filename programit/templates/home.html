@@ -1,101 +1,97 @@
-{% extends "base.html" %} {% block title %}Stoper | ProgramIT{% endblock %} 
+{% extends "base.html" %}
+{% block title %}Countdown | ProgramIT{% endblock %}
 {% block content %}
+
+<div class="flex flex-col md:flex-row justify-center items-start gap-6 mt-10 w-full md:w-[60rem] mx-auto">
+  <!-- COUNTDOWN -->
+  <div class="flex-1 bg-[#282c34] border border-[#3e4451] rounded-xl p-6 text-center">
+    <h1 class="text-[#61afef] text-base font-bold mb-4">Countdown</h1>
+
+    <div class="flex justify-center items-center space-x-2 mb-4">
+      <input
+        id="minutes"
+        type="number"
+        min="0"
+        placeholder="MM"
+        class="w-16 bg-[#1e1e1e] border border-[#3e4451] rounded text-center text-[#abb2bf] font-mono p-1"
+      />
+      <span class="text-[#abb2bf] font-bold">:</span>
+      <input
+        id="seconds"
+        type="number"
+        min="0"
+        max="59"
+        placeholder="SS"
+        class="w-16 bg-[#1e1e1e] border border-[#3e4451] rounded text-center text-[#abb2bf] font-mono p-1"
+      />
+    </div>
+
+    <div id="timer-display" class="text-4xl font-mono text-[#98c379] mb-6">
+      00:00
+    </div>
+
+    <div class="flex justify-center space-x-4">
+      <button
+        id="timer-start"
+        class="px-4 py-2 rounded bg-[#98c379] text-[#1e1e1e] font-semibold hover:bg-[#7cbf69] transition"
+      >
+        ▶ Start
+      </button>
+      <button
+        id="timer-stop"
+        class="px-4 py-2 rounded bg-[#e06c75] text-[#1e1e1e] font-semibold hover:bg-[#c45b64] transition"
+      >
+        ■ Stop
+      </button>
+      <button
+        id="timer-reset"
+        class="px-4 py-2 rounded bg-[#d19a66] text-[#1e1e1e] font-semibold hover:bg-[#c18456] transition"
+      >
+        ↺ Reset
+      </button>
+    </div>
+
+    <div
+      id="timer-status"
+      class="bg-[#1e1e1e] border border-[#3e4451] rounded-lg p-3 mt-6 text-center text-[#61afef] font-bold hidden"
+    >
+      Time gone!
+    </div>
+  </div>
+
+  <!-- RECENT TIMES -->
+  <div class="w-full md:w-64 bg-[#282c34] border border-[#3e4451] rounded-xl p-6 text-center">
+    <h2 class="text-[#61afef] text-base font-bold mb-4">Recent Times</h2>
+    <ul
+      id="recent"
+      class="font-mono text-sm text-[#abb2bf] space-y-1 text-left ml-4"
+    ></ul>
+  </div>
+</div>
+
+<!-- DOLNY PUSTY DIV -->
 <div
-  class="flex flex-col md:flex-row justify-center items-start gap-10 mt-10 w-full"
+  class="bg-[#282c34] border border-[#3e4451] rounded-xl p-6 w-full md:w-[60rem] text-center mt-10 mx-auto"
 >
-  <!-- Okno kodu -->
-  <div class="code-window w-full md:w-[40rem] overflow-hidden">
-    <div
-      class="bg-[#21252b] text-[#5c6370] px-4 py-1 text-xs border-b border-[#3e4451]"
-    >
-      ~/stoper/home.html
-    </div>
-    <div class="p-4 font-mono text-sm leading-6">
-      <div class="flex">
-        <div class="text-[#5c6370] w-8 text-right pr-2">1</div>
-        <div>
-          <span class="text-[#c678dd]">def</span>
-          <span class="text-[#61afef]">stoper</span>():
-        </div>
-      </div>
-      <div class="flex">
-        <div class="text-[#5c6370] w-8 text-right pr-2">2</div>
-        <div>&nbsp;&nbsp;time = "00:00"</div>
-      </div>
-      <div class="flex">
-        <div class="text-[#5c6370] w-8 text-right pr-2">3</div>
-        <div>&nbsp;&nbsp;while running:</div>
-      </div>
-      <div class="flex">
-        <div class="text-[#5c6370] w-8 text-right pr-2">4</div>
-        <div>&nbsp;&nbsp;&nbsp;&nbsp;update(display)</div>
-      </div>
-      <div class="flex">
-        <div class="text-[#5c6370] w-8 text-right pr-2">5</div>
-        <div>&nbsp;&nbsp;&nbsp;&nbsp;sleep(1)</div>
-      </div>
-      <div class="flex">
-        <div class="text-[#5c6370] w-8 text-right pr-2">6</div>
-        <div>&nbsp;&nbsp;return time</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Stoper -->
-  <div class="flex flex-col items-center w-full md:w-80 space-y-6">
-    <div
-      class="bg-[#282c34] border border-[#3e4451] rounded-xl p-6 w-full text-center code-window"
-    >
-      <h1 class="text-[#61afef] text-lg font-bold mb-4">STOPER</h1>
-      <div id="display" class="text-4xl font-mono text-[#98c379] mb-6">
-        00:00
-      </div>
-
-      <div class="flex justify-center space-x-4">
-        <button
-          id="start"
-          class="px-4 py-2 rounded bg-[#98c379] text-[#1e1e1e] font-semibold hover:bg-[#7cbf69] transition"
-        >
-          ▶ Start
-        </button>
-        <button
-          id="stop"
-          class="px-4 py-2 rounded bg-[#e06c75] text-[#1e1e1e] font-semibold hover:bg-[#c45b64] transition"
-        >
-          ■ Stop
-        </button>
-        <button
-          id="reset"
-          class="px-4 py-2 rounded bg-[#d19a66] text-[#1e1e1e] font-semibold hover:bg-[#c18456] transition"
-        >
-          ↺ Reset
-        </button>
-      </div>
-    </div>
-
-    <div
-      class="bg-[#282c34] border border-[#3e4451] rounded-xl p-6 w-full text-center code-window"
-    >
-      <h2 class="text-[#61afef] text-base font-bold mb-4">Recent Times</h2>
-      <ul
-        id="recent"
-        class="font-mono text-sm text-[#abb2bf] space-y-1 text-left ml-4"
-      ></ul>
-    </div>
-  </div>
+  <h2 class="text-[#61afef] text-base font-bold mb-4">Additional Section</h2>
+  <p class="text-[#abb2bf] text-sm">Empty section for future use...</p>
 </div>
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    const display = document.getElementById("display");
-    const startBtn = document.getElementById("start");
-    const stopBtn = document.getElementById("stop");
-    const resetBtn = document.getElementById("reset");
+    const display = document.getElementById("timer-display");
+    const minutesInput = document.getElementById("minutes");
+    const secondsInput = document.getElementById("seconds");
+    const startBtn = document.getElementById("timer-start");
+    const stopBtn = document.getElementById("timer-stop");
+    const resetBtn = document.getElementById("timer-reset");
+    const statusBox = document.getElementById("timer-status");
+    const recentList = document.getElementById("recent");
 
-    let startTime = 0,
-      elapsedTime = 0,
-      timer = null,
-      running = false;
+    let totalTime = 0;
+    let remaining = 0;
+    let timer = null;
+    let running = false;
 
     function fmt(ms) {
       const s = Math.floor(ms / 1000);
@@ -106,42 +102,74 @@
     }
 
     function update() {
-      display.textContent = fmt(elapsedTime);
+      display.textContent = fmt(remaining);
+    }
+
+    function saveRecent(time) {
+      const li = document.createElement("li");
+      li.textContent = time;
+      recentList.prepend(li);
+      const times = Array.from(recentList.querySelectorAll("li")).map(
+        (l) => l.textContent
+      );
+      localStorage.setItem("recentCountdowns", JSON.stringify(times));
+    }
+
+    function loadRecent() {
+      const saved = JSON.parse(localStorage.getItem("recentCountdowns") || "[]");
+      recentList.innerHTML = "";
+      saved.forEach((t) => {
+        const li = document.createElement("li");
+        li.textContent = t;
+        recentList.appendChild(li);
+      });
     }
 
     startBtn.onclick = () => {
       if (running) return;
+      let m = parseInt(minutesInput.value || "0");
+      let s = parseInt(secondsInput.value || "0");
+      totalTime = (m * 60 + s) * 1000;
+      if (totalTime <= 0 && remaining <= 0) return;
+
+      remaining = remaining || totalTime;
       running = true;
-      startTime = Date.now() - elapsedTime;
+      statusBox.classList.add("hidden");
+
       timer = setInterval(() => {
-        elapsedTime = Date.now() - startTime;
+        remaining -= 1000;
+        if (remaining <= 0) {
+          clearInterval(timer);
+          running = false;
+          remaining = 0;
+          update();
+          statusBox.classList.remove("hidden");
+          saveRecent(fmt(totalTime));
+        }
         update();
-      }, 100);
+      }, 1000);
+      update();
     };
 
     stopBtn.onclick = () => {
       if (!running) return;
       running = false;
       clearInterval(timer);
-      const time = fmt(elapsedTime);
-      recentList.prepend(li);
-      localStorage.setItem(
-        "recentTimes",
-        JSON.stringify(
-          Array.from(recentList.querySelectorAll("li")).map(
-            (l) => l.textContent
-          )
-        )
-      );
     };
 
     resetBtn.onclick = () => {
       running = false;
       clearInterval(timer);
-      elapsedTime = 0;
+      remaining = 0;
       update();
+      statusBox.classList.add("hidden");
+      minutesInput.value = "";
+      secondsInput.value = "";
     };
 
+    loadRecent();
+    update();
   });
 </script>
+
 {% endblock %}

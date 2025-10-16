@@ -8,7 +8,7 @@ It provides tools for time tracking, focus management, and performance compariso
 <img width="1986" height="1158" alt="image" src="https://github.com/user-attachments/assets/000ca33f-37f9-459b-bd07-5da5e77a02a9" />
 
 
-This project is currently in an early development stage. Contributions and feedback are welcome.
+## This project is currently in an early development stage. Contributions and feedback are welcome.
 
 ---
 

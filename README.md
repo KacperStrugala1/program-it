@@ -3,7 +3,7 @@
 Program-It is a web application designed to help new devs and advanced programmers work on their projects (program it), by improving productivity, tracking work sessions, and staying motivated through data-driven insights and leaderboards.
 It provides tools for time tracking, focus management, and performance comparison in a simple, web-based interface.
 
-<img width="1958" height="1056" alt="image" src="https://github.com/user-attachments/assets/90cd88b5-66c0-48b8-8b3f-459edc833d4e" />
+<img width="1986" height="822" alt="image" src="https://github.com/user-attachments/assets/e9367f1a-11da-450d-b3cd-7874bb4c23a7" />
 
 <img width="1986" height="1158" alt="image" src="https://github.com/user-attachments/assets/000ca33f-37f9-459b-bd07-5da5e77a02a9" />
 

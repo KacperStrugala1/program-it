@@ -39,12 +39,14 @@
       </button>
       <button
         id="timer-stop"
+        action="start"
         class="px-4 py-2 rounded bg-[#e06c75] text-[#1e1e1e] font-semibold hover:bg-[#c45b64] transition"
       >
         ■ Stop
       </button>
       <button
         id="timer-reset"
+        action = "stop"
         class="px-4 py-2 rounded bg-[#d19a66] text-[#1e1e1e] font-semibold hover:bg-[#c18456] transition"
       >
         ↺ Reset
@@ -60,12 +62,17 @@
   </div>
 
   <!-- RECENT TIMES -->
+   
   <div class="w-full md:w-64 bg-[#282c34] border border-[#3e4451] rounded-xl p-6 text-center">
     <h2 class="text-[#61afef] text-base font-bold mb-4">Recent Times</h2>
+    
     <ul
       id="recent"
       class="font-mono text-sm text-[#abb2bf] space-y-1 text-left ml-4"
-    ></ul>
+    >{% for time in times%}
+    <li>{{time.category}}, {{time.duration}}</li>
+  </ul>
+  {% endfor %}
   </div>
 </div>
 

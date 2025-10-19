@@ -3,18 +3,19 @@ from main.models.time_model import Time
 from main.models.work_time import WorkTime
 from django.contrib.auth.forms import *
 from django.utils import timezone
-import logging
 from django.contrib.auth import authenticate
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import login
 from django.contrib import messages
 from .forms import RegisterForm
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 
+import logging
+
 def home_view(request):
-    latest_times = Time.objects.order_by("-created_at")[:5]
+    times = Time.objects.order_by("-created_at")[:5]
     context = {
-        "time": latest_times,
+        "times": times,
     }
 
     try:
@@ -23,9 +24,11 @@ def home_view(request):
             if action == "start":
                 Time.objects.create(start_time=timezone.now())
             elif action == "stop":
-                last_time_object = Time.objects.latest("id")
-                last_time_object.stop_time = timezone.now()
-                last_time_object.save()
+                if Time.objects.last():
+                    if Time.end_time is None:
+                        last_time_object = Time.objects.latest("id")
+                        last_time_object.stop_time = timezone.now()
+                        last_time_object.save()
             return redirect("home")
     except Exception as exc:
         logging.error(f"Error while POST method {exc}")

@@ -1,11 +1,9 @@
 from django.shortcuts import render, redirect
 from main.models.time_model import Time
-from main.models.work_time import WorkTime
 from django.contrib.auth.forms import *
 from django.utils import timezone
 from django.contrib.auth import authenticate
 from django.contrib.auth import login
-from django.contrib import messages
 from .forms import RegisterForm
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
@@ -13,26 +11,8 @@ from django.contrib.auth.decorators import login_required
 import logging
 
 def home_view(request):
-    times = Time.objects.order_by("-created_at")[:5]
-    context = {
-        "times": times,
-    }
-
-    try:
-        action = request.POST.get("action")
-        if request.method == "POST":
-            if action == "start":
-                Time.objects.create(start_time=timezone.now())
-            elif action == "stop":
-                if Time.objects.last():
-                    if Time.end_time is None:
-                        last_time_object = Time.objects.latest("id")
-                        last_time_object.stop_time = timezone.now()
-                        last_time_object.save()
-            return redirect("home")
-    except Exception as exc:
-        logging.error(f"Error while POST method {exc}")
-    return render(request, "home.html", context)
+    
+    return render(request, "home.html")
 
 
 def login_view(request):

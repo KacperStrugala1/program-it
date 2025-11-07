@@ -8,11 +8,5 @@ class Time(models.Model):
     user = models.ForeignKey("auth.User", on_delete=models.CASCADE, null=True)
     created_at = models.DateTimeField()
 
-    def get_duration(self):
-        try:
-            duration = self.duration
-        except (ValueError, AttributeError):
-            duration = timedelta()
-
     def __str__(self):
         return f"{self.get_duration()}, {self.category}"

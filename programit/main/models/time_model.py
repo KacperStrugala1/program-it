@@ -1,12 +1,19 @@
 from datetime import timedelta
 from django.db import models
+from datetime import datetime, date, timedelta, time
 
 
 class Time(models.Model):
-    duration = models.DurationField(null=True, blank=True)
+    start_time = models.TimeField(null=True, blank=True)
+    end_time = models.TimeField(null=True, blank=True)
     category = models.CharField(max_length=50, null=True)
     user = models.ForeignKey("auth.User", on_delete=models.CASCADE, null=True)
-    created_at = models.DateTimeField()
+    created_at = models.DateTimeField(default=datetime.now)
+
+    
 
     def __str__(self):
         return f"{self.get_duration()}, {self.category}"
+    
+    class Meta:
+        verbose_name = "Focus duration"

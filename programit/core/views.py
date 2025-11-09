@@ -1,14 +1,11 @@
 from django.shortcuts import render, redirect
-from main.models.time_model import Time
 from django.contrib.auth.forms import *
-from django.utils import timezone
 from django.contrib.auth import authenticate
 from django.contrib.auth import login
 from .forms import RegisterForm
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 
-import logging
 
 def home_view(request):
     

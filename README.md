@@ -26,7 +26,7 @@ It provides tools for time tracking, focus management, and performance compariso
 
 | Component | Technology |
 |------------|-------------|
-| Backend | Python (Django) |
+| Backend | Python (Django), Celery |
 | Frontend | HTML, CSS, JavaScript |
 | Database | SQLite |
 

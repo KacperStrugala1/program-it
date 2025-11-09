@@ -65,15 +65,30 @@
    
   <div class="w-full md:w-64 bg-[#282c34] border border-[#3e4451] rounded-xl p-6 text-center">
     <h2 class="text-[#61afef] text-base font-bold mb-4">Recent Times</h2>
+      
+  <table border="1">
+    <tr>
+      <th>Start</th>
+      <th>Koniec</th>
+      <th>Punkty</th>
+      <th>Aktywny</th>
+    </tr>
+    {% for timer in timers %}
+    <tr>
+      <td>{{ timer.start_time }}</td>
+      <td>{{ timer.end_time }}</td>
+      <td>{{ timer.points }}</td>
+      <td>{{ timer.is_active }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="4">Brak timerów</td></tr>
+    {% endfor %}
+  </table>
+
+<a href="{% url 'start_timer' %}">Dodaj nowy timer</a>
+
     
-    <ul
-      id="recent"
-      class="font-mono text-sm text-[#abb2bf] space-y-1 text-left ml-4"
-    >{% for time in times%}
-    <li>{{time.category}}, {{time.duration}}</li>
-  </ul>
-  {% endfor %}
-  </div>
+    
 </div>
 
 <!-- DOLNY PUSTY DIV -->

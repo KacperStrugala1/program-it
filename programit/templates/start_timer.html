@@ -1,0 +1,9 @@
+<h2>Ustaw timer</h2>
+<form method="post">
+  {% csrf_token %}
+  <label>Czas (minuty):</label>
+  <input type="number" name="minutes" min="1" required>
+  <button type="submit">Start</button>
+</form>
+
+<a href="{% url 'timer_list' %}">Zobacz swoje timery</a>

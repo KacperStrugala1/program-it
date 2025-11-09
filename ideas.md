@@ -15,3 +15,4 @@
 3. ScoreModel
     1. User()
     2. Points
+![alt text](image.png)

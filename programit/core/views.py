@@ -1,3 +1,4 @@
+from datetime import timedelta
 from django.shortcuts import render, redirect
 from main.models.time_model import Time
 from django.contrib.auth.forms import *
@@ -9,6 +10,18 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 
 import logging
+
+def start_timer(request):
+    if request.method == "POST":
+        minutes = int(request.POST.get("minutes"))
+        end_time = timezone.now() + timedelta(minutes=minutes)
+        Time.objects.create(user=request.user, end_time=end_time)
+        return redirect("timer_list")
+    return render(request, "start_timer.html")
+
+def timer_list(request):
+    timers = Time.objects.filter(user=request.user)
+    return render(request, "timer_list.html", {"timers": timers})
 
 def home_view(request):
     

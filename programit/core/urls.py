@@ -11,4 +11,6 @@ urlpatterns = [
     path("profile/", views.profile_view, name="profile"),
     path("accounts/", include("django.contrib.auth.urls")),
     path("logout/", views.logout_view, name="logout"),
+    path("start_timer/", views.start_timer, name="start_timer"),
+    path("timer_list/", views.timer_list, name="timer_list"),
 ]

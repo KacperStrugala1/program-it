@@ -13,14 +13,14 @@ def add_points_to_active_timers():
         if now >= timer.end_time:
             
             elapsed = now - timer.end_time
-            intervals = int(elapsed.total_seconds() // 30)  # 30 sekund
+            intervals = int(elapsed.total_seconds() // 900)  # 15 min intervals   
             new_points = intervals * 20
 
             if new_points > timer.points:
                 timer.points = new_points
                 timer.save()
-                print(f"[Celery Test] {timer.user.username}: +{new_points} pkt")
+                print(f" {timer.user.username}: +{new_points} pkt")
                 print("Points updated for active timers.")
         else:
             Time.objects.exclude(pk=timer.pk).update(is_active=False)
-            print(f"[Celery Test] {timer.user.username}: No new points to add.")
+            print(f"{timer.user.username}: No new points to add.")

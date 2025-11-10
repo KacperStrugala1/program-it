@@ -114,11 +114,9 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Europe/Warsaw'
 
-from celery.schedules import crontab
-
 CELERY_BEAT_SCHEDULE = {
-    'update-timers-every-30-seconds': {
+    'update-timers-every-60-seconds': {
         'task': 'main.tasks.add_points_to_active_timers',
-        'schedule': 30.0, 
+        'schedule': 60.0, 
     },
 }

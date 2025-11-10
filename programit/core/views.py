@@ -11,21 +11,20 @@ from django.contrib.auth.decorators import login_required
 
 import logging
 
-def start_timer(request):
-    if request.method == "POST":
-        minutes = int(request.POST.get("minutes"))
-        end_time = timezone.now() + timedelta(minutes=minutes)
-        Time.objects.create(user=request.user, end_time=end_time)
-        return redirect("timer_list")
-    return render(request, "start_timer.html")
-
-def timer_list(request):
-    timers = Time.objects.filter(user=request.user)
-    return render(request, "timer_list.html", {"timers": timers})
-
 def home_view(request):
-    
-    return render(request, "home.html")
+    if request.method == "POST":
+        minutes = (request.POST.get("minutes"))
+        seconds = (request.POST.get("seconds"))
+        logging.info(f"{minutes}, {seconds}")
+        minutes = [int(i) for i in minutes.split()]
+        seconds = [int(i) for i in seconds.split()]
+        minutes = " ".join(minutes)
+        seconds = " ".join(seconds)
+        
+        end_time = timezone.now() + timedelta(minutes=minutes,seconds=seconds)
+        Time.objects.create(user=request.user, end_time=end_time, start_time=timezone.now())
+    timers = Time.objects.filter(user=request.user)
+    return render(request, "home.html",{"timers": timers})
 
 
 def login_view(request):

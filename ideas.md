@@ -3,15 +3,6 @@
 2. Add additional section with linux excercises
 3. Add points 
 
-*Data in DB*
+*Improve*
+1. aftef logout is lazy object
 
-1. User - name, email, password, rights - automatically created by django
-2. TimeModel
-   1. StartTime
-   2. EndTime
-   3. DurationTime
-   4. User()
-   5. 
-3. ScoreModel
-    1. User()
-    2. Points

@@ -9,7 +9,6 @@
     font-family: 'Fira Code', monospace;
   }
 
-  /* === OKNO KODU === */
   .code-window {
     background-color: #282c34;
     border: 1px solid #3e4451;
@@ -80,7 +79,6 @@
     display: inline-block;
   }
 
-  /* === TERMINAL PANEL === */
   .terminal {
     background-color: #1e1e1e;
     border-top: 1px solid #3e4451;
@@ -89,6 +87,7 @@
     font-size: 0.9rem;
     line-height: 1.5;
   }
+
   .terminal-line span.user {
     color: #61afef;
   }
@@ -99,16 +98,6 @@
     color: #e5c07b;
   }
 
-  /* === STATUS BAR === */
-  .status-bar {
-    background-color: #2c323c;
-    color: #5c6370;
-    font-size: 0.8rem;
-    border-top: 1px solid #3e4451;
-    padding: 0.3rem 1rem;
-    text-align: center;
-  }
-
   .vim-cursor {
     display: inline-block;
     width: 0.6ch;
@@ -116,7 +105,9 @@
     animation: blink 1s steps(1) infinite;
   }
   @keyframes blink {
-    50% { background: transparent; }
+    50% {
+      background: transparent;
+    }
   }
 
   @media (max-width: 768px) {
@@ -127,43 +118,144 @@
   }
 </style>
 
-<body>
-  <main class="profile-wrapper">
-    <div class="code-window w-full">
-      <div class="window-header">~/ProgramIT/profile.html</div>
+<main class="profile-wrapper">
+  <div class="code-window w-full">
+    <div class="window-header">~/ProgramIT/profile.html</div>
 
-      <div class="profile-container">
-        <div class="profile-avatar">
-          <img src="" alt="" />
-        </div>
-
-        <div class="profile-info">
-          <h1>{{ user.username }}</h1>
-          <p><span class="text-[#c678dd]">class</span> <span class="text-[#e5c07b]">Developer</span>(<span class="text-[#56b6c2]">User</span>):</p>
-          <p>&nbsp;&nbsp;<span class="text-[#61afef]">def</span> <span class="text-[#e5c07b]">__init__</span>(<span class="text-[#56b6c2]">self</span>):</p>
-          <p>&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-[#56b6c2]">self.username</span> = <span class="text-[#98c379]">"{{ user.username }}"</span></p>
-          <p>&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-[#56b6c2]">self.score</span> = <span class="text-[#e5c07b]">{{ scores.points }}</span></p>
-          <div class="profile_list">Level:Expert (Score: 1250)</div>
-          <div class="profile_list"><a href="https://github.com/KacperStrugala1" target="_blank" class="text-[#61afef] hover:underline">
-              github.com/KacperStrugala1</a>
-          </div>
-
-        </div>
+    <div class="profile-container">
+      <div class="profile-avatar">
+        <img src="" alt="" />
       </div>
 
-      <div class="terminal">
-        <div class="terminal-line"><span class="user">programit@{{ user.username }}</span>:~$ <span class="cmd">whoami</span></div>
-        <div class="terminal-line"><span class="value">{{ user.username }}</span></div>
+      <div class="profile-info">
+        <h1>{{ user.username }}</h1>
+        <p>
+          <span class="text-[#c678dd]">class</span>
+          <span class="text-[#e5c07b]">Developer</span>(
+          <span class="text-[#56b6c2]">User</span>):
+        </p>
+        <p>
+          &nbsp;&nbsp;<span class="text-[#61afef]">def</span>
+          <span class="text-[#e5c07b]">__init__</span>(
+          <span class="text-[#56b6c2]">self</span>):
+        </p>
+        <p>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-[#56b6c2]"
+            >self.username</span
+          >
+          = <span class="text-[#98c379]">"{{ user.username }}"</span>
+        </p>
+        <p>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-[#56b6c2]"
+            >self.description</span
+          >
+          = <span class="text-[#98c379]">"{{ profile.description }}"</span>
+        </p>
+        <p>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-[#56b6c2]"
+            >self.github</span
+          >
+          = <span class="text-[#61afef]">"{{ profile.github_link }}"</span>
+        </p>
 
-        <div class="terminal-line mt-1"><span class="user">programit@{{ user.username }}</span>:~$ <span class="cmd">echo $SCORE</span></div>
-        <div class="terminal-line"><span class="value">1250</span></div>
-
-        <div class="terminal-line mt-1"><span class="user">programit@{{ user.username }}</span>:~$ <span class="cmd">cat ~/about.txt</span></div>
-        <div class="terminal-line text-[#abb2bf]">
-          Keep coding, keep improving.
+        <div class="profile_list">
+          Level: {{ profile.level }} (Score: {{ profile.score }})
         </div>
+
+        <div class="profile_list">
+          <a
+            href="{{ profile.github_link }}"
+            target="_blank"
+            class="text-[#61afef] hover:underline"
+          >
+            {{ profile.github_link }}
+          </a>
+        </div>
+
+        
+        <button
+          id="edit-toggle"
+          class="mt-4 bg-[#61afef] text-[#1e1e1e] px-3 py-1 rounded hover:bg-[#4fa3d1] transition text-sm font-semibold"
+        >
+          ✎ Edit
+        </button>
+
+        
+        <form
+          id="edit-form"
+          method="POST"
+          class="hidden mt-4 flex flex-col gap-2 bg-[#21252b] p-3 rounded border border-[#3e4451]"
+        >
+          {% csrf_token %}
+          <label class="text-sm text-[#98c379]">Username:</label>
+          <input
+            name="username"
+            value="{{ user.username }}"
+            class="bg-[#1e1e1e] text-[#abb2bf] border border-[#3e4451] rounded px-2 py-1"
+          />
+
+          <label class="text-sm text-[#98c379]">Description:</label>
+          <textarea
+            name="description"
+            rows="2"
+            class="bg-[#1e1e1e] text-[#abb2bf] border border-[#3e4451] rounded px-2 py-1"
+          >{{ profile.description }}</textarea>
+
+          <label class="text-sm text-[#98c379]">GitHub Link:</label>
+          <input
+            name="github_link"
+            value="{{ profile.github_link }}"
+            class="bg-[#1e1e1e] text-[#abb2bf] border border-[#3e4451] rounded px-2 py-1"
+          />
+
+          <button
+            type="submit"
+            class="bg-[#98c379] text-[#1e1e1e] px-3 py-1 rounded font-semibold hover:bg-[#7cbf69] transition"
+          >
+            💾 Save
+          </button>
+        </form>
       </div>
     </div>
-  </main>
-</body>
+
+    <div class="terminal">
+      <div class="terminal-line">
+        <span class="user">programit@{{ user.username }}</span>:~$
+        <span class="cmd">whoami</span>
+      </div>
+      <div class="terminal-line"><span class="value">{{ user.username }}</span></div>
+
+      <div class="terminal-line mt-1">
+        <span class="user">programit@{{ user.username }}</span>:~$
+        <span class="cmd">echo $SCORE</span>
+      </div>
+      <div class="terminal-line"><span class="value">{{ profile.score }}</span></div>
+
+      <div class="terminal-line mt-1">
+        <span class="user">programit@{{ user.username }}</span>:~$
+        <span class="cmd">cat ~/about.txt</span>
+      </div>
+      <div class="terminal-line text-[#abb2bf]">
+        {{ profile.description|default:"Keep coding, keep improving." }}
+      </div>
+    </div>
+  </div>
+</main>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const editBtn = document.getElementById("edit-toggle");
+  const form = document.getElementById("edit-form");
+
+  if (editBtn && form) {
+    editBtn.addEventListener("click", () => {
+      form.classList.toggle("hidden");
+      editBtn.textContent = form.classList.contains("hidden")
+        ? "✎ Edit"
+        : "✖ Cancel";
+    });
+  }
+});
+</script>
 {% endblock %}

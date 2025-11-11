@@ -88,13 +88,10 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
 LANGUAGE_CODE = "en-us"
-
-TIME_ZONE = "UTC"
-
 USE_I18N = True
-
+USE_L10N = True
 USE_TZ = True
-
+TIME_ZONE = "Europe/Warsaw"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
@@ -115,8 +112,8 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Europe/Warsaw'
 
 CELERY_BEAT_SCHEDULE = {
-    'update-timers-every-60-seconds': {
+    'update-timers-every-30-seconds': {
         'task': 'main.tasks.add_points_to_active_timers',
-        'schedule': 60.0, 
+        'schedule': 30.0, 
     },
 }

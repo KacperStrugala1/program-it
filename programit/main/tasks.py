@@ -13,7 +13,7 @@ def add_points_to_active_timers():
         if now >= timer.end_time:
             
             elapsed = now - timer.end_time
-            intervals = int(elapsed.total_seconds() // 900)  # 15 min intervals   
+            intervals = int(elapsed.total_seconds() // 30)  # 30 sec intervals   
             new_points = intervals * 20
 
             if new_points > timer.points:

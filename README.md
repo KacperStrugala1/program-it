@@ -49,6 +49,11 @@ python -m venv venv
 ```bash
  pip install -r requirements.txt
  ```
+If you are using Windows install WSL to use Redis and additionally install Celery.
+```bash
+ pip install redis
+ pip install celery
+ ```
 4. Make migrations
 ```bash
 python programit/manage.py makemigrations
@@ -58,3 +63,9 @@ python programit/manage.py migrate
 ```bash
 python programit/manage.py runserver
 ```
+6. Run celery worker and beat
+```bash
+celery -A programit/core worker -l INFO
+celery -A programit/core beat 
+```
+

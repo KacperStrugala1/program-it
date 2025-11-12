@@ -21,8 +21,8 @@
     </div>
     {% endif %}
 
-    <form method="POST" action="{% url 'login' %}" class="space-y-4">
-      
+    <form method="POST" action="{% url 'log_into_acc' %}" class="space-y-4">
+     
 
       <!-- USERNAME -->
       <div>
@@ -52,7 +52,15 @@
           class="bg-[#21252b] text-[#abb2bf] border border-[#3e4451] rounded-xl w-full px-3 py-2 focus:ring-2 focus:ring-[#61afef] focus:outline-none"
         />
       </div>
-
+       {% if messages %}
+      <ul class="messages">
+          {% for message in messages %}
+              <span class="text-[#1e1e1e]">
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+              </span>
+          {% endfor %}
+      </ul>
+        {% endif %}
       <div class="pt-4">
         <button
           type="submit"

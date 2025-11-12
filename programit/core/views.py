@@ -11,14 +11,14 @@ from django.contrib.auth import login
 from .forms import RegisterForm
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-
+from django.contrib import messages
 
 
 """Views for the home page, login, registration, logout, and profile."""
 
 def home_view(request):
     if not request.user.is_authenticated:
-        return redirect("/login")
+        return render(request, "home.html")
     
     if request.method == "POST":
         try:
@@ -27,7 +27,7 @@ def home_view(request):
         
             if minutes == 0 and seconds == 0:
                 logging.warning("No time provided — timer was not created.")
-                return redirect("/")
+                return redirect("")
 
             end_time = timezone.now() + datetime.timedelta(minutes=minutes, seconds=seconds)
             Time.objects.create(
@@ -42,20 +42,24 @@ def home_view(request):
     timers = Time.objects.filter(user=request.user).order_by("-start_time")
     return render(request, "home.html", {"timers": timers})
 
-
 def login_view(request):
     if request.method == "POST":
-        username = request.POST["username"]
-        password = request.POST["password"]
-
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect("/")
-        else:
-            return redirect("login")
+            username = request.POST["username"]
+            password = request.POST["password"]
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect("/")
+            else:
+                messages.add_message(request, messages.ERROR, "Invalid credentials")
+                return redirect('/log_into_acc')
     else:
         return render(request, "login.html")
+
+
+def logout_view(request):
+    logout(request)
+    return redirect("/log_into_acc")
 
 
 def register(request):
@@ -63,15 +67,11 @@ def register(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("/login")
+            return redirect("log_into_acc/")
     else:
         form = RegisterForm()
     return render(request, "register.html", {"form": form})
 
-@login_required(login_url="login")
-def logout_view(request):
-    logout(request)
-    return redirect("home")
 
 @login_required(login_url="login")
 def profile_view(request):
@@ -81,5 +81,5 @@ def profile_view(request):
         profile_user.github_username = request.POST.get("github_username", profile_user.github_username)
         profile_user.description = request.POST.get("description", profile_user.description)
         profile_user.save()
-        return redirect("/profile")
+        return redirect("profile/")
     return render(request, "profile.html")

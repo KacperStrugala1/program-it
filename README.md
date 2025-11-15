@@ -1,6 +1,6 @@
 # Program-It
 
-Program-It is a web application designed to help new devs and advanced programmers work on their projects (program it), by improving productivity, tracking work sessions, and staying motivated through data-driven insights and leaderboards.
+Program-It is a web application designed to help new devs and advanced programmers work on their projects (program it), by improving productivity, tracking work sessions, and backlog to track your progress.
 It provides tools for time tracking, focus management, and performance comparison in a simple, web-based interface.
 
 <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/a6c4fc0b-519c-41f1-ab4b-b5789ee5e8fd" />
@@ -16,8 +16,7 @@ It provides tools for time tracking, focus management, and performance compariso
 ## Features
 
 - Work time tracking and session logging  
-- Productivity statistics and focus analysis  
-- Leaderboards for motivation and comparison  
+- Backlog to follow your tasks
 - User authentication and personalized dashboards  
 - Modular Django architecture for easy feature expansion  
 
@@ -45,29 +44,34 @@ Follow the steps below to run the application locally.
 ```bash
 python -m venv venv
 ```
-3. Install requirements.txt
+3. Install uv 
 ```bash
- pip install -r requirements.txt
+ pip install uv
  ```
-If you are using Windows install WSL to use Redis and additionally install Celery.
+4. Sync uv to download all required libraries
 ```bash
- pip install redis
- pip install celery
- sudo service redis-server start
- sudo apt-get install redis-server
+ uv sync
  ```
-4. Make migrations
-```bash
-python programit/manage.py makemigrations
-python programit/manage.py migrate
-```
+
+If you are using Windows install WSL to use Redis.
+
 5. Run server locally
 ```bash
 python programit/manage.py runserver
 ```
-6. Run celery worker and beat
+6. Run celery worker (in additional terminal)
 ```bash
-celery -A programit/core worker -l INFO
-celery -A programit/core beat 
+cd programit/
+celery -A core worker -l INFO
+```
+If you have issues with starting celery(due to redis problems) library use that commands:
+```bash
+ sudo service redis-server start
+ sudo apt-get install redis-server
+ ```
+7. Run celery beat (in additional terminal)
+```bash
+cd programit/
+celery -A core beat 
 ```
 

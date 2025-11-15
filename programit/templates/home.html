@@ -137,14 +137,159 @@
   </div>
 </div>
 
-<!-- ADDITIONAL SECTION -->
+<!-- BACKLOG SECTION -->
 <div
   class="bg-[#282c34] border border-[#3e4451] rounded-xl p-6 w-full md:w-[70rem] text-center mt-10 mx-auto shadow-md"
 >
-  <h2 class="text-[#61afef] text-base font-bold mb-4">Additional Section</h2>
-  <p class="text-[#abb2bf] text-sm">Empty section for future use...</p>
+  <h2 class="text-[#61afef] text-base font-bold mb-6">Backlog</h2>
+
+  <!-- ADD TASK INPUT -->
+  <div class="flex justify-center mb-6 gap-3">
+    <input
+      id="new-task-input"
+      type="text"
+      placeholder="Write a task..."
+      class="w-64 bg-[#1e1e1e] border border-[#3e4451] rounded-lg text-[#abb2bf] p-2 text-sm"
+    />
+    <button
+      id="add-task-btn"
+      class="px-4 py-2 bg-[#98c379] rounded-lg text-[#1e1e1e] font-semibold hover:bg-[#7cbf69] transition"
+    >
+      Add
+    </button>
+  </div>
+
+  <!-- COLUMNS -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+
+    <!-- TO DO -->
+    <div class="bg-[#21252b] border border-[#3e4451] rounded-xl p-4">
+      <h3 class="text-[#61afef] font-bold mb-3">To Do</h3>
+      <div id="todo" class="min-h-40 space-y-3 p-2 bg-[#1e1e1e] rounded-lg"
+           ondragover="event.preventDefault()"></div>
+    </div>
+
+    <!-- IN PROGRESS -->
+    <div class="bg-[#21252b] border border-[#3e4451] rounded-xl p-4">
+      <h3 class="text-[#61afef] font-bold mb-3">In Progress</h3>
+      <div id="inprogress" class="min-h-40 space-y-3 p-2 bg-[#1e1e1e] rounded-lg"
+           ondragover="event.preventDefault()"></div>
+    </div>
+
+    <!-- DONE -->
+    <div class="bg-[#21252b] border border-[#3e4451] rounded-xl p-4">
+      <h3 class="text-[#61afef] font-bold mb-3">Done</h3>
+      <div id="done" class="min-h-40 space-y-3 p-2 bg-[#1e1e1e] rounded-lg"
+           ondragover="event.preventDefault()"></div>
+    </div>
+
+  </div>
 </div>
-  <script>
+
+<!-- EDIT MODAL -->
+<div id="edit-modal"
+  class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+  <div class="bg-[#282c34] border border-[#3e4451] rounded-xl p-6 w-80 shadow-xl">
+    <h3 class="text-[#61afef] font-bold mb-4">Edit Task</h3>
+
+    <input id="edit-input"
+      class="w-full bg-[#1e1e1e] border border-[#3e4451] rounded-lg text-[#abb2bf] p-2 text-sm mb-4"/>
+
+    <div class="flex justify-end gap-3">
+      <button id="edit-cancel"
+        class="px-3 py-1 bg-[#e06c75] text-[#1e1e1e] rounded hover:bg-[#c45b64]">Cancel</button>
+      <button id="edit-save"
+        class="px-3 py-1 bg-[#98c379] text-[#1e1e1e] rounded hover:bg-[#7cbf69]">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const addBtn = document.getElementById("add-task-btn");
+  const input = document.getElementById("new-task-input");
+
+  // Modal elements
+  const modal = document.getElementById("edit-modal");
+  const editInput = document.getElementById("edit-input");
+  const editSave = document.getElementById("edit-save");
+  const editCancel = document.getElementById("edit-cancel");
+
+  let currentEditTask = null; // the DOM element being edited
+
+  function openEditModal(taskEl) {
+    currentEditTask = taskEl;
+    editInput.value = taskEl.textContent.trim();
+    modal.classList.remove("hidden", "opacity-0");
+    modal.classList.add("flex");
+  }
+
+  function closeEditModal() {
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+  }
+
+  // SAVE EDIT
+  editSave.addEventListener("click", () => {
+    if (currentEditTask) {
+      currentEditTask.textContent = editInput.value.trim() || "Untitled task";
+    }
+    closeEditModal();
+  });
+
+  // CANCEL EDIT
+  editCancel.addEventListener("click", closeEditModal);
+
+
+  function createTaskElement(text) {
+    const div = document.createElement("div");
+    div.className =
+      "task bg-[#2c313c] border border-[#3e4451] rounded-lg p-3 text-[#abb2bf] cursor-move shadow hover:bg-[#333842] transition";
+    div.textContent = text;
+
+    div.draggable = true;
+
+    
+    div.addEventListener("dragstart", (e) => {
+      e.dataTransfer.setData("task-id", "dragging");
+      window.draggedTask = div;
+      div.classList.add("opacity-50");
+    });
+
+    div.addEventListener("dragend", () => {
+      div.classList.remove("opacity-50");
+      window.draggedTask = null;
+    });
+
+   
+    div.addEventListener("click", () => {
+      openEditModal(div);
+    });
+
+    return div;
+  }
+
+
+  addBtn.addEventListener("click", () => {
+    const text = input.value.trim();
+    if (!text) return;
+
+    const taskEl = createTaskElement(text);
+    document.getElementById("todo").appendChild(taskEl);
+
+    input.value = "";
+  });
+
+  document.querySelectorAll("#todo, #inprogress, #done").forEach((col) => {
+    col.addEventListener("drop", (e) => {
+      e.preventDefault();
+      if (window.draggedTask) {
+        col.appendChild(window.draggedTask);
+      }
+    });
+  });
+});
+
 document.addEventListener("DOMContentLoaded", () => {
   const display = document.getElementById("timer-display");
   const minutesInput = document.getElementById("minutes");
@@ -170,7 +315,7 @@ document.addEventListener("DOMContentLoaded", () => {
     display.textContent = fmt(remaining);
   }
 
-  // ▶ START
+
   startBtn.addEventListener("click", async () => {
     if (running) return;
 
@@ -180,7 +325,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (totalTime <= 0) return;
 
-    // 🔄 uruchom odliczanie
     remaining = totalTime;
     running = true;
     statusBox.classList.add("hidden");
@@ -198,7 +342,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 1000);
     update();
 
-    // 📨 wyślij dane do Django (bez reloadu)
     try {
       const res = await fetch("/", {
         method: "POST",
@@ -209,12 +352,12 @@ document.addEventListener("DOMContentLoaded", () => {
         body: `minutes=${m}&seconds=${s}`,
       });
       if (res.ok) {
-        console.log("✅ Timer zapisany w Django!");
+        console.log("Timer saved");
       } else {
-        console.error("❌ Błąd podczas wysyłania POST:", res.status);
+        console.error("POST Error:", res.status);
       }
     } catch (err) {
-      console.error("⚠️ Fetch error:", err);
+      console.error("Fetch error:", err);
     }
   });
 

@@ -80,10 +80,10 @@ def profile_view(request):
     if request.method == "POST":
         ProfileModel.objects.update(
             username=request.POST.get("username"),
-            github_username=request.POST.get("github_link"),
+            github_username=request.POST.get("github_username"),
             description=request.POST.get("description"),
             user=User.objects.get(username=request.user.username)
         )
-        return redirect("/")
+        return redirect("/profile")
     profile_data = ProfileModel.objects.filter(user=request.user).first()
     return render(request, "profile.html", {"profile": profile_data})

@@ -53,6 +53,8 @@ If you are using Windows install WSL to use Redis and additionally install Celer
 ```bash
  pip install redis
  pip install celery
+ sudo service redis-server start
+ sudo apt-get install redis-server
  ```
 4. Make migrations
 ```bash

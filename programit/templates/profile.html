@@ -155,7 +155,7 @@
           &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-[#56b6c2]"
             >self.github</span
           >
-          = <span class="text-[#61afef]">"{{ profile.github_link }}"</span>
+          = <span class="text-[#61afef]">"{{ profile.github_username }}"</span>
         </p>
 
         <div class="profile_list">
@@ -164,11 +164,11 @@
 
         <div class="profile_list">
           <a
-            href="{{ profile.github_link }}"
+            href="{{ profile.github_username }}"
             target="_blank"
             class="text-[#61afef] hover:underline"
           >
-            {{ profile.github_link }}
+            {{ profile.github_username }}
           </a>
         </div>
 
@@ -236,7 +236,7 @@
         <span class="cmd">cat ~/about.txt</span>
       </div>
       <div class="terminal-line text-[#abb2bf]">
-        {{ profile.description|default:"Keep coding, keep improving." }}
+        {{ profile.description }}
       </div>
     </div>
   </div>

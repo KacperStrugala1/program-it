@@ -12,6 +12,7 @@ from .forms import RegisterForm
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth.models import User
 
 
 """Views for the home page, login, registration, logout, and profile."""
@@ -75,11 +76,14 @@ def register(request):
 
 @login_required(login_url="login")
 def profile_view(request):
+    
     if request.method == "POST":
-        profile_user = ProfileModel.objects.get(username=request.user.username)
-        profile_user.username = request.POST.get("username", profile_user.username)
-        profile_user.github_username = request.POST.get("github_username", profile_user.github_username)
-        profile_user.description = request.POST.get("description", profile_user.description)
-        profile_user.save()
-        return redirect("profile/")
-    return render(request, "profile.html")
+        ProfileModel.objects.update(
+            username=request.POST.get("username"),
+            github_username=request.POST.get("github_link"),
+            description=request.POST.get("description"),
+            user=User.objects.get(username=request.user.username)
+        )
+        return redirect("/")
+    profile_data = ProfileModel.objects.filter(user=request.user).first()
+    return render(request, "profile.html", {"profile": profile_data})

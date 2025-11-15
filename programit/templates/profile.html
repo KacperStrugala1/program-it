@@ -9,63 +9,66 @@
     font-family: 'Fira Code', monospace;
   }
 
+  /* === OKNO PROFILU === */
   .code-window {
     background-color: #282c34;
     border: 1px solid #3e4451;
-    border-radius: 0.5rem;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    border-radius: 1.5rem;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.45),
+                0 0 12px rgba(97, 175, 239, 0.15);
+    overflow: hidden;
+    max-width: 1300px;
+    margin: auto;
   }
 
   .window-header {
     background-color: #21252b;
     border-bottom: 1px solid #3e4451;
     color: #5c6370;
-    padding: 0.4rem 1rem;
-    font-size: 0.8rem;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.95rem;
   }
 
+  /* === DWIE KOLUMNY === */
   .profile-wrapper {
-    min-height: calc(100vh - 60px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
+    padding: 3rem;
   }
 
-  .profile-container {
-    display: flex;
-    flex-direction: row;
-    gap: 2rem;
-    padding: 2rem;
-    max-width: 950px;
-    width: 100%;
-  }
+    /* === DWIE KOLUMNY === */
+.grid-two {
+  display: grid;
+  grid-template-columns: 0.6fr 1.4fr;
+  gap: 2.5rem;
+  padding: 2.5rem;
+}
 
+@media (max-width: 1100px) {
+  .grid-two {
+    grid-template-columns: 1.2fr;
+  }
+}
+
+
+  /* === PROFIL === */
   .profile-avatar img {
-    width: 180px;
-    height: 180px;
+    width: 220px;
+    height: 220px;
     border-radius: 50%;
-    border: 4px solid #61afef;
-    box-shadow: 0 0 25px rgba(97, 175, 239, 0.25);
-  }
-
-  .profile-info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    border: 5px solid #61afef;
+    box-shadow: 0 0 20px rgba(97, 175, 239, 0.4);
+    margin-bottom: 1rem;
   }
 
   .profile-info h1 {
     color: #61afef;
-    font-size: 1.8rem;
-    margin-bottom: 0.4rem;
+    font-size: 2.3rem;
+    margin-bottom: 0.6rem;
   }
 
   .profile-info p {
-    margin-bottom: 0.5rem;
     color: #abb2bf;
-    line-height: 1.5;
+    margin-bottom: 0.5rem;
+    font-size: 1.05rem;
   }
 
   .profile_list {
@@ -74,188 +77,195 @@
     font-weight: bold;
     background-color: rgba(152, 195, 121, 0.08);
     border: 1px solid #98c37940;
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
+    padding: 0.6rem 1rem;
+    border-radius: 1rem;
+    font-size: 1rem;
     display: inline-block;
+    box-shadow: 0 0 8px rgba(152, 195, 121, 0.25);
   }
 
-  .terminal {
-    background-color: #1e1e1e;
-    border-top: 1px solid #3e4451;
-    padding: 1rem;
-    margin-top: 1.5rem;
-    font-size: 0.9rem;
-    line-height: 1.5;
+
+/* === TERMINAL – POWIĘKSZONY === */
+.terminal {
+  background-color: #111;
+  border: 1px solid #3e4451;
+  padding: 2rem;                          /* większy padding */
+  border-radius: 1.3rem;
+  min-height: 450px;                      /* terminal wyższy */
+  position: relative;
+  overflow: hidden;
+  transform: scale(1.02);                 /* lekki zoom */
+  box-shadow: 0 0 35px rgba(97, 175, 239, 0.25),
+              0 0 15px rgba(97, 175, 239, 0.2);
+}
+
+  .terminal-line span.user { color: #61afef; font-weight: bold; }
+  .terminal-line span.cmd { color: #98c379; font-weight: bold; }
+  .terminal-line span.value { color: #e5c07b; }
+
+  /* scanline CRT */
+  .terminal::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.03) 0px,
+      rgba(255, 255, 255, 0.03) 1px,
+      transparent 2px,
+      transparent 4px
+    );
+    opacity: 0.13;
+    pointer-events: none;
   }
 
-  .terminal-line span.user {
-    color: #61afef;
-  }
-  .terminal-line span.cmd {
-    color: #98c379;
-  }
-  .terminal-line span.value {
-    color: #e5c07b;
+  /* flicker */
+  .terminal::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.03);
+    mix-blend-mode: overlay;
+    opacity: 0.08;
+    animation: flicker 2.8s infinite;
   }
 
-  .vim-cursor {
+  @keyframes flicker {
+    0%,100%{opacity:0.07;}
+    45%{opacity:0.11;}
+    50%{opacity:0.05;}
+    55%{opacity:0.1;}
+  }
+
+  /* cursor */
+  .terminal-cursor {
     display: inline-block;
     width: 0.6ch;
+    height: 1.1em;
     background-color: #98c379;
-    animation: blink 1s steps(1) infinite;
-  }
-  @keyframes blink {
-    50% {
-      background: transparent;
-    }
+    margin-left: 2px;
+    animation: blinkCursor 1s steps(1) infinite;
   }
 
-  @media (max-width: 768px) {
-    .profile-container {
-      flex-direction: column;
-      text-align: center;
-    }
+  @keyframes blinkCursor {
+    50% { background-color: transparent; }
   }
 </style>
 
 <main class="profile-wrapper">
-  <div class="code-window w-full">
+  <div class="code-window">
     <div class="window-header">~/ProgramIT/profile.html</div>
 
-    <div class="profile-container">
-      <div class="profile-avatar">
-        <img src="" alt="" />
-      </div>
+    <div class="grid-two">
 
+      <!-- === LEWA KOLUMNA – PROFIL === -->
       <div class="profile-info">
+        <div class="profile-avatar">
+          <img src="{{profile.avatar_url}}" alt="avatar" />
+        </div>
+
         <h1>{{ user.username }}</h1>
-        <p>
-          <span class="text-[#c678dd]">class</span>
-          <span class="text-[#e5c07b]">Developer</span>(
-          <span class="text-[#56b6c2]">User</span>):
-        </p>
-        <p>
-          &nbsp;&nbsp;<span class="text-[#61afef]">def</span>
-          <span class="text-[#e5c07b]">__init__</span>(
-          <span class="text-[#56b6c2]">self</span>):
-        </p>
-        <p>
-          &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-[#56b6c2]"
-            >self.username</span
-          >
-          = <span class="text-[#98c379]">"{{ user.username }}"</span>
-        </p>
-        <p>
-          &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-[#56b6c2]"
-            >self.description</span
-          >
-          = <span class="text-[#98c379]">"{{ profile.description }}"</span>
-        </p>
-        <p>
-          &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-[#56b6c2]"
-            >self.github</span
-          >
-          = <span class="text-[#61afef]">"{{ profile.github_username }}"</span>
-        </p>
 
-        <div class="profile_list">
-          Level: {{ profile.level }} (Score: {{ profile.score }})
-        </div>
-
-        <div class="profile_list">
-          <a
-            href="{{ profile.github_username }}"
-            target="_blank"
-            class="text-[#61afef] hover:underline"
-          >
-            {{ profile.github_username }}
-          </a>
-        </div>
-
-        
         <button
           id="edit-toggle"
           class="mt-4 bg-[#61afef] text-[#1e1e1e] px-3 py-1 rounded hover:bg-[#4fa3d1] transition text-sm font-semibold"
         >
-          ✎ Edit
+          Edit profile
         </button>
 
-        
         <form
           id="edit-form"
           method="POST"
           class="hidden mt-4 flex flex-col gap-2 bg-[#21252b] p-3 rounded border border-[#3e4451]"
         >
           {% csrf_token %}
+          <label class="text-sm text-[#98c379]">Profile Image:</label>
+          {% if profile.avatar_url %}
+            <img src="{{ profile.avatar_url }}" alt="avatar" class="w-32 h-32 rounded-full mb-2 border border-[#61afef]" />
+          {% endif %}
+          <input type="file" name="avatar"
+                accept="image/*"
+                class="bg-[#1e1e1e] text-[#abb2bf] border border-[#3e4451] rounded px-2 py-1" />
+
           <label class="text-sm text-[#98c379]">Username:</label>
-          <input
-            name="username"
-            value="{{ user.username }}"
-            class="bg-[#1e1e1e] text-[#abb2bf] border border-[#3e4451] rounded px-2 py-1"
-          />
+          <input name="username" value="{{ profile.username }}"
+                 class="bg-[#1e1e1e] text-[#abb2bf] border border-[#3e4451] rounded px-2 py-1" />
 
           <label class="text-sm text-[#98c379]">Description:</label>
-          <textarea
-            name="description"
-            rows="2"
-            class="bg-[#1e1e1e] text-[#abb2bf] border border-[#3e4451] rounded px-2 py-1"
-          >{{ profile.description }}</textarea>
+          <textarea name="description" rows="2"
+                    class="bg-[#1e1e1e] text-[#abb2bf] border border-[#3e4451] rounded px-2 py-1">{{ profile.description }}</textarea>
 
-          <label class="text-sm text-[#98c379]">GitHub Link:</label>
-          <input
-            name="github_link"
-            value="{{ profile.github_link }}"
-            class="bg-[#1e1e1e] text-[#abb2bf] border border-[#3e4451] rounded px-2 py-1"
-          />
+          <label class="text-sm text-[#98c379]">GitHub Username:</label>
+          <input name="github_username" value="{{ profile.github_username }}"
+                 class="bg-[#1e1e1e] text-[#abb2bf] border border-[#3e4451] rounded px-2 py-1" />
 
-          <button
-            type="submit"
-            class="bg-[#98c379] text-[#1e1e1e] px-3 py-1 rounded font-semibold hover:bg-[#7cbf69] transition"
-          >
-            💾 Save
+          <button type="submit"
+                  class="bg-[#98c379] text-[#1e1e1e] px-3 py-1 rounded font-semibold hover:bg-[#7cbf69] transition">
+            Save
           </button>
         </form>
       </div>
+
+
+      <!-- === PRAWA KOLUMNA – TERMINAL === -->
+      <div class="terminal">
+
+        <div class="terminal-line mt-2">
+          <span class="user">programit@{{ profile.username }}</span>:~$
+          <span class="cmd">whoami</span>
+        </div>
+
+        <div class="terminal-line text-[#abb2bf]">
+          {{ profile.username }}
+        </div>
+
+        <div class="terminal-line">
+          <span class="user">programit@{{ profile.username }}</span>:~$
+          <span class="cmd">cat profile.txt</span>
+        </div>
+
+        <div class="terminal-line text-[#abb2bf]">
+          {{ profile.description }}
+        </div>
+
+        <div class="terminal-line mt-2">
+          <span class="user">programit@{{ profile.username }}</span>:~$
+          <span class="cmd">echo github</span>
+        </div>
+
+        <div class="terminal-line text-[#61afef]">
+          https://github.com/{{ profile.github_username }}
+        </div>
+
+        <div class="terminal-line mt-2">
+          <span class="user">programit@{{ profile.username }}</span>:~$
+          <span class="cmd">echo score</span>
+
+        <div class="terminal-line text-[#abb2bf]">
+          score:{{ profile.points }}
+        </div>
+
+        </div>
+          <span class="terminal-cursor"></span>
+      </div>
+
     </div>
 
-    <div class="terminal">
-      <div class="terminal-line">
-        <span class="user">programit@{{ user.username }}</span>:~$
-        <span class="cmd">whoami</span>
-      </div>
-      <div class="terminal-line"><span class="value">{{ user.username }}</span></div>
-
-      <div class="terminal-line mt-1">
-        <span class="user">programit@{{ user.username }}</span>:~$
-        <span class="cmd">echo $SCORE</span>
-      </div>
-      <div class="terminal-line"><span class="value">{{ profile.score }}</span></div>
-
-      <div class="terminal-line mt-1">
-        <span class="user">programit@{{ user.username }}</span>:~$
-        <span class="cmd">cat ~/about.txt</span>
-      </div>
-      <div class="terminal-line text-[#abb2bf]">
-        {{ profile.description }}
-      </div>
-    </div>
   </div>
 </main>
-
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const editBtn = document.getElementById("edit-toggle");
   const form = document.getElementById("edit-form");
 
-  if (editBtn && form) {
-    editBtn.addEventListener("click", () => {
-      form.classList.toggle("hidden");
-      editBtn.textContent = form.classList.contains("hidden")
-        ? "✎ Edit"
-        : "✖ Cancel";
-    });
-  }
+  editBtn.addEventListener("click", () => {
+    form.classList.toggle("hidden");
+    editBtn.textContent = form.classList.contains("hidden")
+      ? "Edit"
+      : "Cancel";
+  });
 });
 </script>
+
 {% endblock %}

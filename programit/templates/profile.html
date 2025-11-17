@@ -17,9 +17,10 @@
     box-shadow: 0 0 25px rgba(0, 0, 0, 0.45),
                 0 0 12px rgba(97, 175, 239, 0.15);
     overflow: hidden;
-    max-width: 1300px;
+    max-width: 1600px;      /* POSZERZONE OKNO */
+    width: 100%;            /* Używa pełnej szerokości wrappera */
     margin: auto;
-  }
+}
 
   .window-header {
     background-color: #21252b;
@@ -31,16 +32,20 @@
 
   /* === DWIE KOLUMNY === */
   .profile-wrapper {
-    padding: 3rem;
-  }
+    padding: 2rem;
+    width: 95%;
+    max-width: 1700px;
+    margin: auto;
+}
 
     /* === DWIE KOLUMNY === */
-.grid-two {
+  .grid-two {
   display: grid;
-  grid-template-columns: 0.6fr 1.4fr;
-  gap: 2.5rem;
-  padding: 2.5rem;
+  grid-template-columns: 0.55fr 1.45fr;
+  gap: 3rem;
+  padding: 2rem;
 }
+
 
 @media (max-width: 1100px) {
   .grid-two {
@@ -89,6 +94,9 @@
 .terminal {
   background-color: #111;
   border: 1px solid #3e4451;
+  overflow-y: auto;      /* pozwala przewijać */
+  max-height: 450px;     /* możesz ustawić wyżej jeśli chcesz */
+  scrollbar-width: thin; /* ładniejszy scrollbar */
   padding: 2rem;                          /* większy padding */
   border-radius: 1.3rem;
   min-height: 450px;                      /* terminal wyższy */
@@ -207,7 +215,6 @@
       </div>
 
 
-      <!-- === PRAWA KOLUMNA – TERMINAL === -->
       <div class="terminal">
 
         <div class="terminal-line mt-2">
@@ -227,15 +234,7 @@
         <div class="terminal-line text-[#abb2bf]">
           {{ profile.description }}
         </div>
-
-        <div class="terminal-line mt-2">
-          <span class="user">programit@{{ profile.username }}</span>:~$
-          <span class="cmd">echo github</span>
-        </div>
-
-        <div class="terminal-line text-[#61afef]">
-          https://github.com/{{ profile.github_username }}
-        </div>
+         
 
         <div class="terminal-line mt-2">
           <span class="user">programit@{{ profile.username }}</span>:~$
@@ -245,10 +244,19 @@
           score:{{ profile.points }}
         </div>
 
+        <div class="terminal-line mt-2">
+          <span class="user">programit@{{ profile.username }}</span>:~$
+          <span class="cmd">echo help</span>
         </div>
-          <span class="terminal-cursor"></span>
-      </div>
-
+        <div class="terminal-line mt-2">
+        "Available commands:",<br>
+            " help .............. show this help",<br>
+            " about ............. info about the user",<br>
+            " github ............ GitHub profile link",<br>
+            " score ............. show user score",<br>
+            " projects .......... list of projects",<br>
+            " clear ............. clear terminal",
+          </div>
     </div>
 
   </div>
@@ -265,6 +273,136 @@ document.addEventListener("DOMContentLoaded", () => {
       ? "Edit"
       : "Cancel";
   });
+});
+document.addEventListener("DOMContentLoaded", () => {
+    const terminal = document.querySelector(".terminal");
+
+    const commands = {
+        help: [
+            "Available commands:",
+            " help .............. show this help",
+            " about ............. info about the user",
+            " github ............ GitHub profile link",
+            " score ............. show user score",
+            " projects .......... list of projects",
+            " clear ............. clear terminal",
+        ].join("\n"),
+
+        about: `User: {{ profile.username }}\nDescription: {{ profile.description }}`,
+        github: `GitHub: https://github.com/{{ profile.github_username }}`,
+        score: `Your score: {{ profile.points }}`,
+        projects: "User projects:\n - programIT-app\n - AI-engine\n - portfolio-site\n - dev-tools",
+        clear: "!!clear!!"
+    };
+
+    let input = "";
+    let currentPromptLine = null;
+
+    // === AUTO SCROLL ===
+    function autoScroll() {
+        terminal.scrollTop = terminal.scrollHeight;
+    }
+    document.addEventListener("keydown", function (e) {
+    const isBackspace = e.key === "Backspace";
+
+    // If terminal is active, prevent browser navigation
+
+    });
+    // === CREATE PROMPT ===
+    function createPrompt() {
+        const line = document.createElement("div");
+        line.classList.add("terminal-line");
+
+        line.innerHTML =
+            `<span class="user">programit@{{ profile.username }}</span>:~$ ` +
+            `<span class="typed"></span><span class="cursor-block"></span>`;
+
+        terminal.appendChild(line);
+        currentPromptLine = line;
+        autoScroll();
+    }
+
+    // === OUTPUT ===
+    function printLine(text) {
+        const line = document.createElement("div");
+        line.classList.add("terminal-line", "text-[#abb2bf]");
+        line.textContent = text;
+        terminal.appendChild(line);
+        autoScroll();
+    }
+
+    // === EXECUTE ===
+    function execute(inputText) {
+        const typedSpan = currentPromptLine.querySelector(".typed");
+        const cursor = currentPromptLine.querySelector(".cursor-block");
+        cursor.remove();
+
+        typedSpan.textContent = inputText;
+
+        if (commands[inputText]) {
+            if (commands[inputText] === "!!clear!!") {
+                terminal.innerHTML = "";
+                input = "";
+                createPrompt();
+                return;
+            }
+
+            commands[inputText].split("\n").forEach(line => printLine(line));
+        } else {
+            printLine("Unknown command: " + inputText);
+        }
+
+        input = "";
+        createPrompt();
+    }
+
+    // === INPUT HANDLING ===
+    document.addEventListener("keydown", (event) => {
+        if (!currentPromptLine) return;
+
+        const typedSpan = currentPromptLine.querySelector(".typed");
+
+        if (event.key === "Enter") {
+            execute(input);
+            return;
+        }
+
+        if (event.key === "Backspace") {
+            input = input.slice(0, -1);
+            if (input === ""){
+              return;
+            }
+            typedSpan.textContent = input;
+            return;
+        }
+
+        if (event.key.length === 1) {
+            input += event.key;
+            typedSpan.textContent = input;
+        }
+    });
+
+    // === CURSOR STYLE ===
+    const style = document.createElement("style");
+    style.innerHTML = `
+        .cursor-block {
+            display: inline-block;
+            width: 0.6ch;
+            height: 1em;
+            background-color: #98c379;
+            margin-left: 2px;
+            transform: translateY(2px);
+            animation: blinkCursor 0.9s steps(1) infinite;
+        }
+        @keyframes blinkCursor {
+            50% { opacity: 0; }
+        }
+    `;
+    document.head.appendChild(style);
+
+    // === INITIAL LOAD ===
+    createPrompt();
+    
 });
 </script>
 

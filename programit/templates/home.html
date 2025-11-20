@@ -145,18 +145,37 @@
 
   <!-- ADD TASK INPUT -->
   <div class="flex justify-center mb-6 gap-3">
-    <input
-      id="new-task-input"
-      type="text"
-      placeholder="Write a task..."
-      class="w-64 bg-[#1e1e1e] border border-[#3e4451] rounded-lg text-[#abb2bf] p-2 text-sm"
-    />
-    <button
-      id="add-task-btn"
-      class="px-4 py-2 bg-[#98c379] rounded-lg text-[#1e1e1e] font-semibold hover:bg-[#7cbf69] transition"
-    >
-      Add
-    </button>
+    {% csrf_token %}
+    <form method="POST">
+      {% csrf_token %}
+      <input
+        id="new-task-input"
+        type="text"
+        placeholder="Task name"
+        class="w-64 bg-[#1e1e1e] border border-[#3e4451] rounded-lg text-[#abb2bf] p-2 text-sm"
+      />
+      <input
+        id="new-task-input"
+        type="text"
+        name="backlog_category"
+        placeholder="Task category"
+        class="w-64 bg-[#1e1e1e] border border-[#3e4451] rounded-lg text-[#abb2bf] p-2 text-sm"
+      />
+      <input
+        id="new-task-input"
+        type="text"
+        name="description"  
+        placeholder="Task description"
+        class="w-64 bg-[#1e1e1e] border border-[#3e4451] rounded-lg text-[#abb2bf] p-2 text-sm"
+      />
+      <button
+        id="add-task-btn"
+        type="submit"
+        class="px-4 py-2 bg-[#98c379] rounded-lg text-[#1e1e1e] font-semibold hover:bg-[#7cbf69] transition"
+      >
+        Add
+      </button>
+    </form>
   </div>
 
   <!-- COLUMNS -->

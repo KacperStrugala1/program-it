@@ -1,12 +1,14 @@
-{% extends "base.html" %}
-{% block title %}Login | ProgramIT{% endblock %}
-
-{% block content %}
-<body class="min-h-screen bg-[#1e1e1e] flex items-center justify-center font-['Fira_Code',monospace]">
-
-  <div class="bg-[#282c34] border border-[#3e4451] rounded-2xl shadow-lg p-8 w-full max-w-md text-[#abb2bf] code-window">
-
-    <h1 class="text-2xl font-bold text-center text-[#61afef] mb-2 tracking-wide">
+{% extends "base.html" %} {% block title %}Login | ProgramIT{% endblock %} {%
+block content %}
+<body
+  class="min-h-screen bg-[#1e1e1e] flex items-center justify-center font-['Fira_Code',monospace]"
+>
+  <div
+    class="bg-[#282c34] border border-[#3e4451] rounded-2xl shadow-lg p-8 w-full max-w-md text-[#abb2bf] code-window"
+  >
+    <h1
+      class="text-2xl font-bold text-center text-[#61afef] mb-2 tracking-wide"
+    >
       Login<span class="text-[#56b6c2]">()</span>:
     </h1>
     <p class="text-center text-[#5c6370] mb-6">
@@ -14,7 +16,9 @@
     </p>
 
     {% if form.non_field_errors %}
-    <div class="mb-4 bg-[#2c323c] border border-[#e06c75] text-[#e06c75] text-sm p-2 rounded">
+    <div
+      class="mb-4 bg-[#2c323c] border border-[#e06c75] text-[#e06c75] text-sm p-2 rounded"
+    >
       {% for err in form.non_field_errors %}
       <div>{{ err }}</div>
       {% endfor %}
@@ -22,8 +26,6 @@
     {% endif %}
 
     <form method="POST" action="{% url 'log_into_acc' %}" class="space-y-4">
-     
-
       <!-- USERNAME -->
       <div>
         {% csrf_token %}
@@ -52,32 +54,35 @@
           class="bg-[#21252b] text-[#abb2bf] border border-[#3e4451] rounded-xl w-full px-3 py-2 focus:ring-2 focus:ring-[#61afef] focus:outline-none"
         />
       </div>
-       {% if messages %}
+      {% if messages %}
       <ul class="messages">
-          {% for message in messages %}
-              <span class="text-[#1e1e1e]">
-                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-              </span>
-          {% endfor %}
+        {% for message in messages %}
+        <span class="text-[#1e1e1e]">
+          <li>
+            {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{
+            message }}
+          </li>
+        </span>
+        {% endfor %}
       </ul>
-        {% endif %}
+      {% endif %}
       <div class="pt-4">
         <button
           type="submit"
           class="w-full bg-[#98c379] hover:bg-[#7cbf69] text-[#1e1e1e] font-semibold py-2.5 rounded-xl transition duration-200 shadow"
         >
-          <span class="text-[#1e1e1e]">return</span> <span class="text-[#1e1e1e] font-bold">Login</span>
+          <span class="text-[#1e1e1e]">return</span>
+          <span class="text-[#1e1e1e] font-bold">Login</span>
         </button>
       </div>
     </form>
 
     <p class="text-center text-[#5c6370] text-sm mt-4">
       <span class="text-[#98c379]">#</span> Don't have an account?
-      <a href="{% url 'register' %}" class="text-[#61afef] hover:underline">Register</a>
+      <a href="{% url 'register' %}" class="text-[#61afef] hover:underline"
+        >Register</a
+      >
     </p>
-
   </div>
-
 </body>
 {% endblock %}
-</html>

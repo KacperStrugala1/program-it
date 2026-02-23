@@ -15,7 +15,6 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 
 
-"""Views for the home page, login, registration, logout, and profile."""
 
 def home_view(request):
     if not request.user.is_authenticated:

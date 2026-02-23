@@ -23,38 +23,12 @@
   >
     <h1 class="text-[#61afef] text-base font-bold mb-4">Countdown</h1>
 
-    <div class="flex justify-center items-center space-x-2 mb-4">
-      <form method="post">
-      {% csrf_token %}
-      <input
-        name="minutes"
-        id="minutes"
-        type="number"
-        min="1"
-        required
-        placeholder="min"
-        class="w-14 bg-[#1e1e1e] border border-[#3e4451] rounded text-center text-[#abb2bf] font-mono p-1 appearance-none"
-
-      />
-      <span class="text-[#abb2bf] font-bold">:</span>
-      <input
-        name="seconds"
-        id="seconds"
-        type="number"
-        min="0"
-        max="59"
-        required
-        placeholder="sec"
-        class="w-14 bg-[#1e1e1e] border border-[#3e4451] rounded text-center text-[#abb2bf] font-mono p-1 appearance-none"
-      />
     
-    </div>
-
     <div
       id="timer-display"
       class="text-4xl font-mono text-[#98c379] mb-6 tracking-widest"
     >
-      00:00
+      25:00
     </div>
     <!-- Buttons -->
     

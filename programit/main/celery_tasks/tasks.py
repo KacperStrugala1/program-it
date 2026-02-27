@@ -1,7 +1,7 @@
 from celery import shared_task
 from django.utils import timezone
-from datetime import timedelta
-from .models import Time
+from ..models import Time
+
 
 @shared_task
 def add_points_to_active_timers():
@@ -11,9 +11,9 @@ def add_points_to_active_timers():
 
     for timer in timers:
         if now >= timer.end_time:
-            
+
             elapsed = now - timer.end_time
-            intervals = int(elapsed.total_seconds() // 30)  # 30 sec intervals   
+            intervals = int(elapsed.total_seconds() // 30)  # 30 sec intervals
             new_points = intervals * 20
 
             if new_points > timer.points:

@@ -7,27 +7,27 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0008_worktime_date'),
+        ("main", "0008_worktime_date"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='time',
-            name='duration',
+            model_name="time",
+            name="duration",
         ),
         migrations.AddField(
-            model_name='time',
-            name='created_at',
+            model_name="time",
+            name="created_at",
             field=models.DateTimeField(default=datetime.datetime(2025, 10, 19, 19, 5, 24, 131527)),
         ),
         migrations.AddField(
-            model_name='time',
-            name='end_time',
+            model_name="time",
+            name="end_time",
             field=models.DurationField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='time',
-            name='start_time',
+            model_name="time",
+            name="start_time",
             field=models.DurationField(blank=True, null=True),
         ),
     ]

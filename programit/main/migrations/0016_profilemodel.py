@@ -6,18 +6,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0015_time_is_active'),
+        ("main", "0015_time_is_active"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='ProfileModel',
+            name="ProfileModel",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('username', models.CharField(max_length=150, unique=True)),
-                ('github_username', models.CharField(max_length=150, unique=True)),
-                ('description', models.TextField(blank=True)),
-                ('date_joined', models.DateTimeField(auto_now_add=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                    ),
+                ),
+                ("username", models.CharField(max_length=150, unique=True)),
+                ("github_username", models.CharField(max_length=150, unique=True)),
+                ("description", models.TextField(blank=True)),
+                ("date_joined", models.DateTimeField(auto_now_add=True)),
             ],
         ),
     ]

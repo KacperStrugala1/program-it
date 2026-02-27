@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 class Time(models.Model):
     start_time = models.DateTimeField(null=True, blank=True)
     end_time = models.DateTimeField(null=True, blank=True)
@@ -19,6 +20,6 @@ class Time(models.Model):
 
     def __str__(self):
         return f"Query: {self.pk}, {self.category}"
-    
+
     class Meta:
         verbose_name = "Focus duration"

@@ -7,23 +7,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0009_remove_time_duration_time_created_at_time_end_time_and_more'),
+        ("main", "0009_remove_time_duration_time_created_at_time_end_time_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='time',
-            name='created_at',
+            model_name="time",
+            name="created_at",
             field=models.DateTimeField(default=datetime.datetime(2025, 10, 19, 19, 6, 53, 340948)),
         ),
         migrations.AlterField(
-            model_name='time',
-            name='end_time',
+            model_name="time",
+            name="end_time",
             field=models.TimeField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='time',
-            name='start_time',
+            model_name="time",
+            name="start_time",
             field=models.TimeField(blank=True, null=True),
         ),
     ]

@@ -6,25 +6,25 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0011_alter_time_options_alter_time_created_at_and_more'),
+        ("main", "0011_alter_time_options_alter_time_created_at_and_more"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='time',
-            name='created_at',
+            model_name="time",
+            name="created_at",
         ),
         migrations.AlterField(
-            model_name='time',
-            name='end_time',
+            model_name="time",
+            name="end_time",
             field=models.TimeField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='time',
-            name='start_time',
+            model_name="time",
+            name="start_time",
             field=models.TimeField(blank=True, null=True),
         ),
         migrations.DeleteModel(
-            name='WorkTime',
+            name="WorkTime",
         ),
     ]

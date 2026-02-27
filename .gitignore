@@ -2,10 +2,13 @@
 __pycache__*
 *.py[cod]
 *$py.class
-*.pyc
-*pyc
 __pycache__
-
+*.log
+*.poc
+*.pyc
+*/*/*/__pycache__/
+*/*/__pycache__/
+*/__pycache__/
 # django files
 *.log
 local_settings.py

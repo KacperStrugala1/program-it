@@ -41,6 +41,7 @@ dependencies = [
     "packaging==25.0",
     "pillow==11.1.0",
     "prompt-toolkit==3.0.52",
+    "psycopg2>=2.9.11",
     "pyautogui==0.9.54",
     "pycparser==2.22",
     "pygetwindow==0.0.9",

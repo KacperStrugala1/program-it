@@ -1,41 +1,43 @@
 import datetime
 import logging
 
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from main.models.time_model import Time
 from main.models.profile_model import ProfileModel
+from main.models.backlog_model import Backlog   
 from django.contrib.auth.forms import *
 from django.utils import timezone
 from django.contrib.auth import authenticate, login, logout
-from .forms import RegisterForm
+from .forms import RegisterForm, TaskForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.views import View
+from django.utils.decorators import method_decorator
 
 
 class HomeView(View):
     def get(self, request):
         if not request.user.is_authenticated:
-            return render(request, "home.html")
+            return render(request, "home.html", {"form": TaskForm()})
         times = Time.objects.all().order_by("-start_time")
-        return render(request, "home.html", {"times": times})
+        return render(request, "home.html", {"times": times, "form": TaskForm()})
 
     def post(self, request):
-        try:
-            minutes = int(request.POST.get("minutes", 0))
-            seconds = int(request.POST.get("seconds", 0))
-
-            if minutes == 0 and seconds == 0:
-                logging.warning("No time provided — timer was not created.")
-                return redirect("")
-
-            end_time = timezone.now() + datetime.timedelta(minutes=minutes, seconds=seconds)
-            Time.objects.create(user=request.user, start_time=timezone.now(), end_time=end_time)
-        except Exception as e:
-            logging.error(f"Cannot create timers: {e}")
-            return redirect("/")
-
+        
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            task = Backlog.objects.create(
+                name = form.cleaned_data['task_name'],
+                category = form.cleaned_data['task_category'],
+                description = form.cleaned_data['task_description']
+            )
+            
+        else:
+            form = TaskForm()
+            return HttpResponse("Invalid data inserted in form")
+        return redirect("HomeView")
 
 class LoginView(View):
 
@@ -48,7 +50,7 @@ class LoginView(View):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect("/")
+            return redirect("HomeView")
         else:
             messages.add_message(request, messages.ERROR, "Invalid credentials")
             return redirect("/log_into_acc")
@@ -70,10 +72,10 @@ class RegisterView(View):
         form = RegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("log_into_acc/")
+            return redirect("/log_into_acc/")
 
 
-@login_required(login_url="login")
+@method_decorator(login_required, name='dispatch')
 class ProfileView(View):
 
     def get(self, request):

@@ -12,3 +12,9 @@ class RegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ["username", "email", "password1", "password2"]
+
+
+class TaskForm(forms.Form):
+    task_name = forms.CharField(max_length=100)
+    task_category = forms.CharField(max_length=50)
+    task_description = forms.CharField(max_length=500)

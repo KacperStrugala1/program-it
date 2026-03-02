@@ -12,7 +12,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1"]
 
 
 INSTALLED_APPS = [
@@ -60,10 +60,15 @@ WSGI_APPLICATION = "core.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "Tasks",
+        "USER": 'postgres',
+        "PASSWORD": 'postgres',
+        "PORT": "5432",
+        "HOST": "localhost"
     }
 }
+
 
 
 # Password validation
@@ -88,11 +93,12 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "pl-pl"
+DEFAULT_CHARSET = 'utf-8'
+TIME_ZONE = "Europe/Warsaw"
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
-TIME_ZONE = "Europe/Warsaw"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/

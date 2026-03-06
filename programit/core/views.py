@@ -1,5 +1,3 @@
-import datetime
-import logging
 
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -7,7 +5,7 @@ from main.models.time_model import Time
 from main.models.profile_model import ProfileModel
 from main.models.backlog_model import Backlog   
 from django.contrib.auth.forms import *
-from django.utils import timezone
+
 from django.contrib.auth import authenticate, login, logout
 from .forms import RegisterForm, TaskForm
 from django.contrib.auth.decorators import login_required
@@ -22,13 +20,14 @@ class HomeView(View):
         if not request.user.is_authenticated:
             return render(request, "home.html", {"form": TaskForm()})
         times = Time.objects.all().order_by("-start_time")
-        return render(request, "home.html", {"times": times, "form": TaskForm()})
+        tasks = Backlog.objects.all().order_by("-created_at")
+        return render(request, "home.html", {"times": times, "form": TaskForm(), "tasks":tasks})
 
     def post(self, request):
         
         form = TaskForm(request.POST)
         if form.is_valid():
-            task = Backlog.objects.create(
+            Backlog.objects.create(
                 name = form.cleaned_data['task_name'],
                 category = form.cleaned_data['task_category'],
                 description = form.cleaned_data['task_description']
@@ -37,7 +36,7 @@ class HomeView(View):
         else:
             form = TaskForm()
             return HttpResponse("Invalid data inserted in form")
-        return redirect("HomeView")
+        return redirect( "home")
 
 class LoginView(View):
 
